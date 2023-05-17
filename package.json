@@ -9,17 +9,36 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.0",
+    "@next-auth/prisma-adapter": "^1.0.6",
+    "@prisma/client": "4.13.0",
+    "@tanstack/react-query": "^4.29.7",
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "autoprefixer": "10.4.14",
+    "bcrypt": "^5.1.0",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.2",
+    "framer-motion": "^10.12.9",
+    "fs": "0.0.1-security",
     "next": "13.3.2",
+    "next-auth": "^4.22.1",
     "postcss": "8.4.23",
+    "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
+    "react-icons": "^4.8.0",
+    "react-select": "^5.7.3",
     "tailwindcss": "3.3.2",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "zod": "^3.21.4",
+    "zustand": "^4.3.8"
+  },
+  "devDependencies": {
+    "@hookform/devtools": "^4.3.1",
+    "prisma": "^4.14.0"
   }
 }
