@@ -6,6 +6,7 @@ import { BiSearch } from "react-icons/bi";
 import Image from "next/image";
 import AdidasIcon from "@/components/icons/adidasIcon/AdidasIcon";
 import Link from "next/link";
+import { useCart } from "@/hooks/cart/cart_hooks";
 
 type HeaderProps = {
   profile?: string;
@@ -17,6 +18,7 @@ const Header = ({
   isIcon = false,
 }: HeaderProps) => {
   const isOpen = useSidebar((state) => state.isOpen);
+  const cart = useCart((state) => state.products);
   const onSideBarPressed = useSidebar((state) => state.toggleSideBar);
 
   return (
@@ -37,7 +39,14 @@ const Header = ({
               <AdidasIcon width={28} height={28} />
             </Link>
           )}
-          <RiShoppingBag2Line size={25} />
+          <Link href="/cart" className="relative">
+            <RiShoppingBag2Line size={25} />
+            {cart.length ? (
+              <span className="absolute top-[-3px] right-[-5px] flex justify-center items-center p-2 bg-red-600 text-stone-100 text-[.6rem] font-[300] rounded-full w-[4px] h-[4px]">
+                {cart.length}
+              </span>
+            ) : null }
+          </Link>
           <BiSearch size={25} />
         </section>
         <div

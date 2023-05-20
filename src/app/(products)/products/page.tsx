@@ -40,9 +40,11 @@ const getProducts = async ({
 const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
   const { products } = await getProducts({
     skip: 0,
-    take: 8,
+    take: 15,
     category: searchParams.category.toUpperCase(),
   });
+
+  console.log(searchParams);
 
   return (
     <main className="w-screen overflow-hidden px-3">

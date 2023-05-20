@@ -25,7 +25,7 @@ const getProducts = async ({
 };
 
 const Hot = async () => {
-  const { products } = await getProducts({ take: 8, skip: 15 });
+  const { products } = await getProducts({ take: 15, skip: 15 });
 
   return (
     <main className="mt-3 px-3">

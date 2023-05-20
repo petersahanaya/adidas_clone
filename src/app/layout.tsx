@@ -2,7 +2,9 @@ import SessionProvide from "@providers/sessionProvider/SessionProvider";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import Post from "./homepage/post/Post";
-import ReactQueryProvider from "@/components/clientOnly/reactQueryProvider/ReactQueryProvider";
+import ReactQueryProvider from "@components/clientOnly/reactQueryProvider/ReactQueryProvider";
+import GenerateCart from "@components/generateCart/GenerateCart";
+import Footer from "@/components/footer/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -20,8 +22,12 @@ export default function RootLayout({
       <body className={poppins.className}>
         <Post />
         <ReactQueryProvider>
-          <SessionProvide>{children}</SessionProvide>
+          <SessionProvide>
+            <GenerateCart />
+            {children}
+          </SessionProvide>
         </ReactQueryProvider>
+        <Footer />
       </body>
     </html>
   );

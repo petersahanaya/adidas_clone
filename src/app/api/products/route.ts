@@ -12,8 +12,11 @@ export async function GET(req: Request) {
   const category = url.searchParams.get("category");
 
   try {
-    if (!type) {
+    if (type) {
       const products = await prisma.product.findMany({
+        where: {
+          type,
+        },
         take: Number(take),
         skip: Number(skip),
         select: {
@@ -31,6 +34,7 @@ export async function GET(req: Request) {
       });
       return NextResponse.json({ products: products || [] });
     } else if (category) {
+      console.log({ category });
       const products = await prisma.product.findMany({
         take: Number(take),
         skip: Number(skip),
@@ -51,9 +55,6 @@ export async function GET(req: Request) {
       return NextResponse.json({ products: products || [] });
     } else {
       const products = await prisma.product.findMany({
-        where: {
-          type,
-        },
         take: Number(take),
         skip: Number(skip),
         select: {

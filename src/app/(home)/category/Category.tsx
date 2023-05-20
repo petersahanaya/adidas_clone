@@ -22,17 +22,20 @@ const Category = () => {
     <main className="w-screen px-4 flex flex-col gap-2">
       {listOfCategory.map((category, idx) => (
         <section key={idx} className="w-full h-[100px] relative rounded-lg">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-stone-800 to-transparent z-10"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-stone-800/50 to-transparent z-10"></div>
           <Image
             className="object-cover rounded-md"
             src={category.imageSrc}
             alt={category.title}
             fill
           />
-          <Link href={`/products?category=${category.title}`} className="absolute bottom-[10px] left-[28%] z-10">
+          <Link
+            href={`/products?category=${category.title}`}
+            className="absolute bottom-[10px] left-[28%] z-10"
+          >
             <Button
               textColor="text-stone-100 text-xs"
-              background="bg-stone-800"
+              background="bg-stone-900"
               width="w-[120px]"
               type="button"
             >

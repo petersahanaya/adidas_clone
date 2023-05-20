@@ -10,6 +10,8 @@ import { useSession } from "next-auth/react";
 import SignIcon from "../icons/signIcon/SignIcon";
 import AddIcon from "../icons/addIcon/AddIcon";
 import { usePostComponent } from "@/hooks/post/post_hooks";
+import { useAuthSession } from "@/hooks/session/session_hooks";
+import { useEffect } from "react";
 
 const listOfCategory = [
   {
@@ -25,9 +27,14 @@ const listOfCategory = [
 
 const Sidebar = () => {
   const { data } = useSession();
+  const createSession = useAuthSession((state) => state.createSession);
   const toggleSidebar = useSidebar((state) => state.toggleSideBar);
   const isOpen = useSidebar((state) => state.isOpen);
   const togglePost = usePostComponent((state) => state.togglePostComponent);
+
+  useEffect(() => {
+    createSession(data!);
+  }, [createSession, data]);
 
   return (
     <>

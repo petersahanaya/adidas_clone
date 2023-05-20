@@ -57,6 +57,7 @@ const Preview = ({ product }: PreviewProps) => {
             ))}
         </nav>
         <Image
+          className="object-cover"
           src={product.previewImages[selectedIdx]}
           alt={product.title}
           priority

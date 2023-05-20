@@ -7,6 +7,7 @@ import Description from "./description/Description";
 import { Product } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import AlsoLike from "./alsoLike/AlsoLike";
+import { Session } from "next-auth";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -23,10 +24,15 @@ const getProduct = async (key: string | string[]) => {
 
 type ClientProductProps = {
   placeholderData: { product: Product };
+  session: Session;
   id: string;
 };
 
-const ClientProduct = ({ placeholderData, id }: ClientProductProps) => {
+const ClientProduct = ({
+  placeholderData,
+  id,
+  session,
+}: ClientProductProps) => {
   const { data } = useQuery({
     queryKey: ["product", id],
     queryFn: () => getProduct(id),
@@ -39,6 +45,8 @@ const ClientProduct = ({ placeholderData, id }: ClientProductProps) => {
       <Tag />
       <section className="px-4 py-3 w-full">
         <Description
+          userId={session.user.id!}
+          product={data!.product}
           size={data!.product.size}
           stock={data!.product.stock}
           title={data!.product.title}

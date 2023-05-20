@@ -33,7 +33,9 @@ model Product {
   title         String
   description   String
   price         Int
+  originalPrice Int      @default(0)
   stock         Int
+  count         Int      @default(1)
   size          String
   type          String
   category      String
