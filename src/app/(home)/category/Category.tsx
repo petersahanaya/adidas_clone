@@ -30,7 +30,7 @@ const Category = () => {
             fill
           />
           <Link
-            href={`/products?category=${category.title}`}
+            href={`/products?category=${category.title}&type=all`}
             className="absolute bottom-[10px] left-[28%] z-10"
           >
             <Button

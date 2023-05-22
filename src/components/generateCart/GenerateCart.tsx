@@ -17,8 +17,6 @@ const GenerateCart = () => {
         );
         const data = (await resp.json()) as { cart: Product[] };
 
-        console.log({ data });
-
         return loadProduct(data.cart);
       } catch (e: any) {
         console.error(e);

@@ -8,11 +8,56 @@ export async function GET(req: Request) {
 
   const take = url.searchParams.get("take");
   const skip = url.searchParams.get("skip");
-  const type = url.searchParams.get("type");
+  const type = url.searchParams.get("type") as string;
   const category = url.searchParams.get("category");
 
   try {
-    if (type) {
+    if (category && type) {
+      if (type === "ALL") {
+        const products = await prisma.product.findMany({
+          where: {
+            category,
+          },
+          take: Number(take),
+          skip: Number(skip),
+          select: {
+            title: true,
+            description: true,
+            stock: true,
+            price: true,
+            previewImages: true,
+            previewSrc: true,
+            type: true,
+            id: true,
+            category: true,
+            size: true,
+          },
+        });
+        return NextResponse.json({ products: products || [] });
+      } else {
+        const products = await prisma.product.findMany({
+          where: {
+            category,
+            type,
+          },
+          take: Number(take),
+          skip: Number(skip),
+          select: {
+            title: true,
+            description: true,
+            stock: true,
+            price: true,
+            previewImages: true,
+            previewSrc: true,
+            type: true,
+            id: true,
+            category: true,
+            size: true,
+          },
+        });
+        return NextResponse.json({ products: products || [] });
+      }
+    } else if (type && type !== "ALL") {
       const products = await prisma.product.findMany({
         where: {
           type,
@@ -34,7 +79,6 @@ export async function GET(req: Request) {
       });
       return NextResponse.json({ products: products || [] });
     } else if (category) {
-      console.log({ category });
       const products = await prisma.product.findMany({
         take: Number(take),
         skip: Number(skip),

@@ -45,9 +45,11 @@ const Header = ({
               <span className="absolute top-[-3px] right-[-5px] flex justify-center items-center p-2 bg-red-600 text-stone-100 text-[.6rem] font-[300] rounded-full w-[4px] h-[4px]">
                 {cart.length}
               </span>
-            ) : null }
+            ) : null}
           </Link>
-          <BiSearch size={25} />
+          <Link href={`/search?q=`}>
+            <BiSearch size={25} />
+          </Link>
         </section>
         <div
           onClick={onSideBarPressed}

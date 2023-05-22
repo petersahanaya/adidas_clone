@@ -1,8 +1,11 @@
 import Card from "@/app/(home)/card/Card";
 import Header from "@/app/homepage/header/Header";
+import Filter from "@/components/filter/Filter";
+import LottieComp from "@/components/lottie/LottieComp";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Product } from "@prisma/client";
 import { Fragment } from "react";
+import emptyAnimation from "../../../../public/empty-lottie.json";
 
 type ProductsPageProps = {
   params: {};
@@ -16,12 +19,14 @@ const getProducts = async ({
   take,
   skip,
   category,
+  type,
 }: {
   take: number;
   skip: number;
   category: string;
+  type: string;
 }): Promise<{ products: Product[] }> => {
-  const url = `http://localhost:3000/api/products?category=${category}&take=${take}&limit=${skip}`;
+  const url = `http://localhost:3000/api/products?category=${category}&take=${take}&limit=${skip}&type=${type}`;
 
   try {
     const resp = await fetch(url, {
@@ -37,25 +42,32 @@ const getProducts = async ({
   }
 };
 
+const typeOptions = [{ value: "SHIRT" }, { value: "SHOES" }];
+
 const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
   const { products } = await getProducts({
     skip: 0,
     take: 15,
     category: searchParams.category.toUpperCase(),
+    type: searchParams.type.toUpperCase(),
   });
 
-  console.log(searchParams);
 
   return (
     <main className="w-screen overflow-hidden px-3">
       <Header isIcon />
       <Sidebar />
-      <header className="mb-3">
-        <div>
+      <header className="mb-3 ">
+        <div className="flex justify-start items-center gap-2">
           <h2 className="text-3xl font-[300] text-stone-800 italic">
             {searchParams.category}
           </h2>
+          /
+          <h2 className="text-2xl font-[400] text-stone-800 italic">
+            {searchParams.type}
+          </h2>
         </div>
+        <Filter hint="choose type" keyAdded="type" options={typeOptions} />
       </header>
       {products.length ? (
         <nav className="w-screen grid grid-cols-2">
@@ -73,9 +85,15 @@ const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
           ))}
         </nav>
       ) : (
-        <h2 className="text-center text-2xl italic">
-          Sorry there&apos;s no products
-        </h2>
+        <nav className="w-full h-screen">
+          <LottieComp
+            buttonText=""
+            animation={emptyAnimation}
+            isButton={false}
+            title="coming soon"
+            subtitle="choose another type"
+          />
+        </nav>
       )}
     </main>
   );

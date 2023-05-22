@@ -65,10 +65,8 @@ const incrementProductCountFunc = (
   id: string
 ): { products: Product[] } => {
   const found = state.find((product) => product.id === id) as Product;
-  console.log({ found });
 
   const existingProducts = state.filter((product) => product.id !== id);
-  console.log({ existingProducts });
 
   return {
     products: [
