@@ -23,7 +23,7 @@ const getProduct = async (key: string | string[]) => {
 };
 
 type ClientProductProps = {
-  placeholderData: { product: Product };
+  placeholderData: { product: Product; isFavorite: boolean };
   session: Session;
   id: string;
 };
@@ -45,6 +45,8 @@ const ClientProduct = ({
       <Tag />
       <section className="px-4 py-3 w-full">
         <Description
+          id={id}
+          isFavorite={placeholderData.isFavorite}
           userId={session.user.id!}
           product={data!.product}
           size={data!.product.size}

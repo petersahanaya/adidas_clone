@@ -7,6 +7,7 @@ import Spinner from "@/components/spinner/Spinner";
 import { useCart } from "@/hooks/cart/cart_hooks";
 import Button from "@components/button/Button";
 import { Product } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
 type DescriptionProps = {
@@ -16,6 +17,8 @@ type DescriptionProps = {
   stock: number;
   userId: string;
   product: Product;
+  id: string;
+  isFavorite: boolean;
 };
 
 const Description = ({
@@ -24,10 +27,13 @@ const Description = ({
   size,
   stock,
   product,
+  id,
   userId,
+  isFavorite,
 }: DescriptionProps) => {
   const cart = useCart((state) => state.products);
   const addToCart = useCart((state) => state.addToCart);
+  const router = useRouter();
 
   const [state, setState] = useState({
     error: false,
@@ -35,7 +41,11 @@ const Description = ({
     loading: false,
   });
 
-  console.log("CART : ", cart);
+  const [favoriteState, setFavoriteState] = useState({
+    error: false,
+    success: false,
+    loading: false,
+  });
 
   const onPressedAddToCart = useCallback(async () => {
     addToCart(product);
@@ -59,8 +69,6 @@ const Description = ({
 
       const data = await resp.json();
 
-      console.log("ADDED TO CART : ", data);
-
       setState((prev) => ({ ...prev, loading: false, success: true }));
 
       setTimeout(() => {
@@ -71,6 +79,58 @@ const Description = ({
       setState((prev) => ({ ...prev, loading: false, error: false }));
     }
   }, [addToCart, product, userId]);
+
+  const onPressedFavorite = useCallback(async () => {
+    setFavoriteState((prev) => ({ ...prev, loading: true }));
+    try {
+      const resp = await fetch(
+        `${BASE_URL}/api/favorite?productId=${id}&userId=${userId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify({ productId: id, userId }),
+        }
+      );
+
+      if (resp.status === 200 || resp.ok) {
+        setFavoriteState((prev) => ({
+          ...prev,
+          loading: false,
+          success: true,
+        }));
+
+        setTimeout(() => {
+          setFavoriteState((prev) => ({
+            ...prev,
+            loading: false,
+            success: false,
+          }));
+        }, 1500);
+
+        router.refresh();
+      }
+
+      const data = await resp.json();
+    } catch (e) {
+      setFavoriteState((prev) => ({
+        ...prev,
+        loading: false,
+        error: true,
+      }));
+
+      setTimeout(() => {
+        setFavoriteState((prev) => ({
+          ...prev,
+          loading: false,
+          error: false,
+        }));
+      }, 1500);
+    } finally {
+      setFavoriteState((prev) => ({ ...prev, loading: false, error: false }));
+    }
+  }, [id, router, userId]);
 
   return (
     <>
@@ -96,12 +156,20 @@ const Description = ({
             ) : (
               <Spinner width={23} height={23} color="#ffffff" />
             )}
-            {/* <ArrowIcon color="#ffffff" width={13} height={13} /> */}
+            <ArrowIcon color="#ffffff" width={10} height={10} />
           </Button>
         </div>
-        <div className="border-[1px] p-[.55rem] border-stone-400">
-          <HeartIcon width={28} height={28} isLike={false} />
-        </div>
+        <button
+          disabled={favoriteState.loading}
+          onClick={onPressedFavorite}
+          className="border-[1px] p-[.55rem] border-stone-400"
+        >
+          {!favoriteState.loading ? (
+            <HeartIcon width={28} height={28} isLike={isFavorite} />
+          ) : (
+            <Spinner height={28} width={28} />
+          )}
+        </button>
       </div>
       <div className="mt-6">
         <span>
