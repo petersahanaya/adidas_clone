@@ -22,7 +22,7 @@ const Category = () => {
     <main className="w-screen px-4 flex flex-col gap-2">
       {listOfCategory.map((category, idx) => (
         <section key={idx} className="w-full h-[100px] relative rounded-lg">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-stone-800/50 to-transparent z-10"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-stone-800/90 to-transparent z-10"></div>
           <Image
             className="object-cover rounded-md"
             src={category.imageSrc}
@@ -31,12 +31,12 @@ const Category = () => {
           />
           <Link
             href={`/products?category=${category.title}&type=all`}
-            className="absolute bottom-[10px] left-[28%] z-10"
+            className="absolute bottom-[20px] left-[5%] z-10"
           >
             <Button
               textColor="text-stone-100 text-xs"
               background="bg-stone-900"
-              width="w-[120px]"
+              width="w-[180px]"
               type="button"
             >
               {category.title}

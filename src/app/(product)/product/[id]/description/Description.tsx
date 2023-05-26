@@ -146,7 +146,7 @@ const Description = ({
         <div onClick={onPressedAddToCart}>
           <Button
             background="bg-stone-400"
-            width="w-[160px] flex-1"
+            width="w-[160px] xs:w-[350px] flex-1"
             textColor="text-stone-100"
             padding="mt-4 p-4"
             type="button"

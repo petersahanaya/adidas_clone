@@ -8,7 +8,8 @@ import { Fragment } from "react";
 import Card from "../(home)/card/Card";
 import LottieComp from "@components/lottie/LottieComp";
 import emptyAnimation from "../../../public/empty-lottie.json";
-import Heading from "@/components/heading/Heading";
+import Heading from "@components/heading/Heading";
+import Sidebar from "@components/sidebar/Sidebar";
 
 type FavoritePageProps = {
   params: {};
@@ -97,34 +98,45 @@ const FavoritePage = async ({ params, searchParams }: FavoritePageProps) => {
   return (
     <main className="w-screen h-screen">
       <Header isIcon />
-      <section className="w-full px-4">
+      <Sidebar />
+      <section className="w-full px-4 border-t-[1px] border-t-stone-300 pt-6">
         <Filter hint="choose a type" keyAdded="type" options={typeOptions} />
         <Filter
           hint="choose a category"
           keyAdded="category"
           options={categoryOptions}
         />
-        <Heading >Favorite</Heading>
+        <span className="px-6">
+          <Heading>Favorite</Heading>
+        </span>
       </section>
-      {products.length ? (
-        <nav className="px-4 grid grid-cols-2 justify-items-center">
-          {products.map((product, idx) => (
-            <Fragment key={idx}>
-              <Card {...product} />
-            </Fragment>
-          ))}
-        </nav>
-      ) : null}
+      <section className="mt-2">
+        {products.length ? (
+          <nav
+            className={`px-4 grid grid-cols-2 ${
+              products.length === 1
+                ? "justify-items-start"
+                : "justify-items-center"
+            }`}
+          >
+            {products.map((product, idx) => (
+              <Fragment key={idx}>
+                <Card {...product} />
+              </Fragment>
+            ))}
+          </nav>
+        ) : null}
 
-      {!products.length ? (
-        <LottieComp
-          animation={emptyAnimation}
-          isButton={false}
-          title="there's no favorite product"
-          subtitle="go and add favorite product"
-          buttonText=""
-        />
-      ) : null}
+        {!products.length ? (
+          <LottieComp
+            animation={emptyAnimation}
+            isButton={false}
+            title="there's no favorite product"
+            subtitle="go and add favorite product"
+            buttonText=""
+          />
+        ) : null}
+      </section>
     </main>
   );
 };

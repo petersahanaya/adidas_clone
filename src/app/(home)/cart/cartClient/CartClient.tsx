@@ -9,6 +9,7 @@ import { useCart } from "@/hooks/cart/cart_hooks";
 import { Session } from "next-auth";
 import LottieComp from "@/components/lottie/LottieComp";
 import emptyAnimation from "../../../../../public/empty-lottie.json";
+import CloseIcon from "@/components/icons/closeIcon/CloseIcon";
 
 type CartClientProps = {
   session: Session;
@@ -56,21 +57,27 @@ const CartClient = ({ session }: CartClientProps) => {
           {cart
             .sort((a, b) => a.price - b.price)
             .map((product, idx) => (
-              <section className="w-full p-1 h-[96px]" key={idx}>
+              <section className="w-full p-1 h-[96px] relative" key={idx}>
+                <span
+                  onClick={() => onDoubleClick(product.id)}
+                  className="absolute top-0 right-0 bg-red-500 p-2 rounded-sm"
+                >
+                  <CloseIcon width={10} height={10} />
+                </span>
                 <nav
                   onDoubleClick={() => onDoubleClick(product.id)}
                   className="flex bg-[#EDEBEE] justify-start items-center gap-2"
                 >
-                  <div className="w-[90px] h-[79px] relative">
+                  <div className="w-[90px] h-[79px] xs:w-[120px] relative">
                     <Image
-                      className="object-cover rounded-md"
+                      className="object-cover xs:object-contain rounded-md"
                       src={product.previewSrc}
                       fill
                       alt={product.title}
                     />
                   </div>
                   <div className="overflow-hidden">
-                    <h4 className="font-[300] text-sm text-ellipsis overflow-hidden whitespace-nowrap">
+                    <h4 className="font-[300] text-sm xs:text-lg xs:font-[400] text-ellipsis overflow-hidden whitespace-nowrap">
                       {product.title}
                     </h4>
                     <span className="w-full flex justify-start items-center gap-3">

@@ -115,7 +115,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   console.log({ searchParams });
 
   return (
-    <main className="w-screen h-screen overflow-hidden">
+    <main className="w-screen h-screen pb-24 overflow-x-hidden">
       <Header isIcon />
       <Sidebar />
       <Input query={searchParams.q} />

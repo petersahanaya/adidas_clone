@@ -30,7 +30,7 @@ const Hot = async () => {
   return (
     <main className="mt-3 px-3">
       <div className="mb-4">
-        <h3 className="text-xl font-[600] uppercase text-stone-800">
+        <h3 className="text-xl xs:text-2xl font-[600] uppercase text-stone-800">
           Best of Adidas
         </h3>
       </div>

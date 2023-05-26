@@ -17,7 +17,7 @@ const tags = [
 
 const Tag = () => {
   return (
-    <section className="flex justify-around items-center overflow-x-scroll px-1 py-2 border-b-[1px] border-b-stone-200">
+    <section className="w-full h-full flex justify-around items-center overflow-x-scroll px-1 py-2 xs:pt-6 border-b-[1px] border-b-stone-200">
       {tags.map((tag, idx) => (
         <a
           key={idx}

@@ -4,9 +4,10 @@ import { useSidebar } from "@/hooks/sidebar/sidebar_hook";
 import { RiShoppingBag2Line } from "react-icons/ri";
 import { BiSearch } from "react-icons/bi";
 import Image from "next/image";
-import AdidasIcon from "@/components/icons/adidasIcon/AdidasIcon";
+import AdidasIcon from "@components/icons/adidasIcon/AdidasIcon";
 import Link from "next/link";
 import { useCart } from "@/hooks/cart/cart_hooks";
+import { useSession } from "next-auth/react";
 
 type HeaderProps = {
   profile?: string;
@@ -20,15 +21,16 @@ const Header = ({
   const isOpen = useSidebar((state) => state.isOpen);
   const cart = useCart((state) => state.products);
   const onSideBarPressed = useSidebar((state) => state.toggleSideBar);
+  const { data } = useSession();
 
   return (
     <>
-      <header className="w-screen h-[8vh] p-2 flex justify-between items-center">
+      <header className="w-screen h-[8vh] p-2 flex justify-between items-center xs:px-10">
         {/* Actions */}
         <section className="flex justify-around items-center gap-4">
           {!isIcon ? (
             <Image
-              src={profile}
+              src={`${!data ? "/profile.jpeg" : data.user.image}`}
               alt="profile"
               width={40}
               height={40}

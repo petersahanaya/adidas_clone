@@ -9,6 +9,7 @@ type CardProps = {
   title: string;
   price: number;
   previewSrc: string;
+  width?: string;
 };
 
 const Card = ({
@@ -18,12 +19,18 @@ const Card = ({
   type,
   category,
   id,
+  width = "w-[120px]",
 }: CardProps) => {
   return (
-    <section className="w-[120px] h-[180px] rounded-sm overflow-hidden">
+    <section className={`${width} h-[180px] rounded-sm overflow-hidden`}>
       <Link href={`/product/${id}`}>
-        <div className="relative w-full h-[120px]">
-          <Image src={imageSrc} alt="hoodie" fill />
+        <div className="relative w-full h-[120px] bg-[#EDEBEE]">
+          <Image
+            className="xs:object-contain"
+            src={imageSrc}
+            alt="hoodie"
+            fill
+          />
         </div>
         <section className="px-2">
           <span className="text-[.6rem] text-stone-400 tracking-wider font-[300] ">

@@ -52,12 +52,11 @@ const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
     type: searchParams.type.toUpperCase(),
   });
 
-
   return (
     <main className="w-screen overflow-hidden px-3">
       <Header isIcon />
       <Sidebar />
-      <header className="mb-3 ">
+      <header className="w-screen border-t-[1px] border-t-stone-300 pt-6 mb-3 px-6 m-auto">
         <div className="flex justify-start items-center gap-2">
           <h2 className="text-3xl font-[300] text-stone-800 italic">
             {searchParams.category}
@@ -70,10 +69,11 @@ const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
         <Filter hint="choose type" keyAdded="type" options={typeOptions} />
       </header>
       {products.length ? (
-        <nav className="w-screen grid grid-cols-2">
+        <nav className="w-screen grid grid-cols-2 justify-items-center">
           {products.map((product, idx) => (
             <Fragment key={idx}>
               <Card
+                width="w-[200px]"
                 title={product.title}
                 category={product.category}
                 previewSrc={product.previewSrc}

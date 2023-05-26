@@ -71,7 +71,7 @@ const Sidebar = () => {
               backdropFilter: "blur(5px)",
             }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-screen h-screen bg-white fixed top-0 right-0 z-20"
+            className="w-screen h-screen overflow-hidden bg-white fixed top-0 right-0 z-20"
           >
             <header className="w-screen h-[8vh] flex justify-center items-center border-b-[1px] border-b-stone-300">
               <AdidasIcon width={40} height={40} />
@@ -91,45 +91,47 @@ const Sidebar = () => {
                 </div>
               ))}
             </section>
-            {data?.user && (
-              <>
-                <section className="border-t-[1px] border-t-stone-300 mt-6">
-                  <ListTile
-                    padding="px-3 pt-4"
-                    border="border-none"
-                    onClick={() => {
-                      togglePost(true);
-                      // toggleSidebar();
-                    }}
-                    label={"post"}
-                  >
-                    <AddIcon width={18} height={18} />
-                  </ListTile>
-                </section>
-                <section className="border-t-[1px] border-t-stone-300 mt-4">
-                  <Link href="/favorite">
+            <nav className="mt-14">
+              {data?.user && (
+                <>
+                  <section className="border-t-[1px] border-t-stone-300 mt-6">
                     <ListTile
-                      padding="px-3 py-4"
+                      padding="px-3 pt-4"
                       border="border-none"
-                      onClick={() => {}}
-                      label="favorite"
+                      onClick={() => {
+                        togglePost(true);
+                        // toggleSidebar();
+                      }}
+                      label={"post"}
                     >
-                      <HeartIcon width={18} height={18} isLike={false} />
+                      <AddIcon width={18} height={18} />
                     </ListTile>
-                  </Link>
-                </section>
-              </>
-            )}
-            <section className="border-t-[1px] border-t-stone-300 mt-1">
-              <ListTile
-                padding="px-3 py-4"
-                border="border-none"
-                onClick={() => {}}
-                label={`${data?.user ? "sign out" : "sign in"}`}
-              >
-                <SignIcon width={18} height={18} />
-              </ListTile>
-            </section>
+                  </section>
+                  <section className="border-t-[1px] border-t-stone-300 mt-4">
+                    <Link href="/favorite">
+                      <ListTile
+                        padding="px-3 py-4"
+                        border="border-none"
+                        onClick={() => {}}
+                        label="favorite"
+                      >
+                        <HeartIcon width={18} height={18} isLike={false} />
+                      </ListTile>
+                    </Link>
+                  </section>
+                </>
+              )}
+              <section className="border-t-[1px] border-t-stone-300 border-b-[1px] border-b-stone-300">
+                <ListTile
+                  padding="px-3 py-4"
+                  border="border-none"
+                  onClick={() => {}}
+                  label={`${data?.user ? "sign out" : "sign in"}`}
+                >
+                  <SignIcon width={18} height={18} />
+                </ListTile>
+              </section>
+            </nav>
           </motion.aside>
         )}
       </AnimatePresence>

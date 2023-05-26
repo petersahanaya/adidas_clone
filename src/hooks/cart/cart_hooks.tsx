@@ -44,7 +44,6 @@ const decrementProductCountFunc = (
   id: string
 ): { products: Product[] } => {
   const found = state.find((product) => product.id === id) as Product;
-  console.log("DECREMENT", found);
 
   const existingProducts = state.filter((product) => product.id !== id);
 
@@ -53,7 +52,10 @@ const decrementProductCountFunc = (
       ...existingProducts,
       {
         ...found,
-        price: found.price - found.originalPrice,
+        price:
+          found.count !== 1
+            ? found.price - found.originalPrice
+            : found.originalPrice,
         count: found.count !== 1 ? found.count - 1 : found.count,
       },
     ],
@@ -73,7 +75,10 @@ const incrementProductCountFunc = (
       ...existingProducts,
       {
         ...found,
-        price: found.price * (found.count + 1),
+        price:
+          found.count !== 4
+            ? found.originalPrice * (found.count + 1)
+            : found.price,
         count: found.count !== 4 ? found.count + 1 : found.count,
       },
     ],
