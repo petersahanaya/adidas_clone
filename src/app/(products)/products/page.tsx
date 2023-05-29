@@ -8,6 +8,9 @@ import { Fragment } from "react";
 import emptyAnimation from "../../../../public/empty-lottie.json";
 import { BASE_URL } from "@/lib/config/url";
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 type ProductsPageProps = {
   params: {};
   searchParams: {

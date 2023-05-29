@@ -5,6 +5,9 @@ import ReactQueryProvider from "@components/clientOnly/reactQueryProvider/ReactQ
 import GenerateCart from "@components/generateCart/GenerateCart";
 import Footer from "@/components/footer/Footer";
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 const poppins = Poppins({
   subsets: ["latin"],
   fallback: ["sans-serif"],

@@ -7,6 +7,9 @@ import AdidasIcon from "@components/icons/adidasIcon/AdidasIcon";
 import SignInAnimation from "../../../../public/lottie-sign.json";
 import LottieComp from "@components/lottie/LottieComp";
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Sign In",
 };

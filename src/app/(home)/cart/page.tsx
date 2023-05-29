@@ -6,6 +6,9 @@ export const metadata = {
   title: "Cart",
 };
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 const CartPage = async () => {
   const session = await getServerSession(authOptions);
   return (
@@ -16,3 +19,8 @@ const CartPage = async () => {
 };
 
 export default CartPage;
+
+/*
+  export const fetchCache = 'force-no-store'
+  export const dynamic = 'force-dynamic'
+*/

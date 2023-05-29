@@ -8,6 +8,9 @@ export const metadata = {
   title: "Adidas",
 };
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 const HomePage = () => {
   return (
     <main className="w-screen pb-10 overflow-hidden">

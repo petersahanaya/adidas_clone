@@ -12,6 +12,9 @@ import Heading from "@components/heading/Heading";
 import Sidebar from "@components/sidebar/Sidebar";
 import { BASE_URL } from "@/lib/config/url";
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 type FavoritePageProps = {
   params: {};
   searchParams: {
@@ -66,9 +69,12 @@ const getFavoriteProducts = async ({
       return data;
     }
 
-    const resp = await fetch(`https://p3das.vercel.app/api/like?userId=${userId}`, {
-      cache: "no-store",
-    });
+    const resp = await fetch(
+      `https://p3das.vercel.app/api/like?userId=${userId}`,
+      {
+        cache: "no-store",
+      }
+    );
     const data = (await resp.json()) as { products: Product[] };
 
     return data;

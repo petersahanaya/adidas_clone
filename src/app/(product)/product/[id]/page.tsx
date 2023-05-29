@@ -7,6 +7,9 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Head from "next/head";
 import { BASE_URL } from "@/lib/config/url";
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 const getProduct = async (key: string | string[], userId: string) => {
   try {
     const resp = await fetch(`https://p3das.vercel.app/api/product?id=${key}`, {

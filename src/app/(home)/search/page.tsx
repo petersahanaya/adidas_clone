@@ -9,6 +9,9 @@ import Card from "../card/Card";
 import Filter from "@/components/filter/Filter";
 import { BASE_URL } from "@/lib/config/url";
 
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
+
 type SearchPageProps = {
   params: {};
   searchParams: {
