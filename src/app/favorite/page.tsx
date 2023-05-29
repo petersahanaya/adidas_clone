@@ -36,7 +36,7 @@ const getFavoriteProducts = async ({
   try {
     if (category && type) {
       const resp = await fetch(
-        `${BASE_URL}/api/like?userId=${userId}&category=${category}&type=${type}`,
+        `https://p3das.vercel.app/api/like?userId=${userId}&category=${category}&type=${type}`,
         {
           cache: "no-store",
         }
@@ -46,7 +46,7 @@ const getFavoriteProducts = async ({
       return data;
     } else if (category) {
       const resp = await fetch(
-        `${BASE_URL}/api/like?userId=${userId}&category=${category}`,
+        `https://p3das.vercel.app/api/like?userId=${userId}&category=${category}`,
         {
           cache: "no-store",
         }
@@ -56,7 +56,7 @@ const getFavoriteProducts = async ({
       return data;
     } else if (type) {
       const resp = await fetch(
-        `${BASE_URL}/api/like?userId=${userId}&type=${type}`,
+        `https://p3das.vercel.app/api/like?userId=${userId}&type=${type}`,
         {
           cache: "no-store",
         }
@@ -66,7 +66,7 @@ const getFavoriteProducts = async ({
       return data;
     }
 
-    const resp = await fetch(`${BASE_URL}/api/like?userId=${userId}`, {
+    const resp = await fetch(`https://p3das.vercel.app/api/like?userId=${userId}`, {
       cache: "no-store",
     });
     const data = (await resp.json()) as { products: Product[] };

@@ -16,7 +16,7 @@ const SignInAuth = () => {
 
   const SignIn = useCallback(async (type: "google" | "facebook" | "github") => {
     startTransition(() => {
-      signIn(type, { callbackUrl: BASE_URL + "/" });
+      signIn(type, { callbackUrl: "https://p3das.vercel.app" + "/" });
     });
   }, []);
 

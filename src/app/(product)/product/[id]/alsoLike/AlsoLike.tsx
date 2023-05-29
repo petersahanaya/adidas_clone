@@ -14,7 +14,7 @@ const getProducts = async ({
   skip: number;
   type: string;
 }) => {
-  const url = `${BASE_URL}/api/products?take=${take}&limit=${skip}`;
+  const url = `https://p3das.vercel.app/api/products?take=${take}&limit=${skip}`;
 
   try {
     const resp = await fetch(url, {

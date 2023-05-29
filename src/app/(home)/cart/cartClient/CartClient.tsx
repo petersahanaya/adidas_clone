@@ -28,7 +28,7 @@ const CartClient = ({ session }: CartClientProps) => {
   const onDoubleClick = async (productId: string) => {
     try {
       const resp = await fetch(
-        `${BASE_URL}/api/cart?userId=${session!.user
+        `https://p3das.vercel.app/api/cart?userId=${session!.user
           .id!}&productId=${productId}`,
         {
           method: "DELETE",

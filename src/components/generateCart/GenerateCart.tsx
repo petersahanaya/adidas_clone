@@ -14,7 +14,10 @@ const GenerateCart = () => {
     (async () => {
       try {
         const resp = await fetch(
-          `${BASE_URL}/api/cart?userId=${session!.user.id}`
+          `https://p3das.vercel.app/api/cart?userId=${session!.user.id}`,
+          {
+            cache: "no-store",
+          }
         );
         const data = (await resp.json()) as { cart: Product[] };
 

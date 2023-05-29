@@ -31,7 +31,7 @@ const getProducts = async ({
   category: string;
   type: string;
 }): Promise<{ products: Product[] }> => {
-  const url = `${BASE_URL}/api/products?category=${category}&take=${take}&limit=${skip}&type=${type}`;
+  const url = `https://p3das.vercel.app/api/products?category=${category}&take=${take}&limit=${skip}&type=${type}`;
 
   try {
     const resp = await fetch(url, {

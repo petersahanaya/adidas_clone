@@ -7,17 +7,19 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Head from "next/head";
 import { BASE_URL } from "@/lib/config/url";
 
-
 const getProduct = async (key: string | string[], userId: string) => {
   try {
-    const resp = await fetch(`${BASE_URL}/api/product?id=${key}`, {
+    const resp = await fetch(`https://p3das.vercel.app/api/product?id=${key}`, {
       cache: "no-store",
     });
 
     const data = (await resp.json()) as { product: Product };
 
     const favoriteResp = await fetch(
-      `${BASE_URL}/api/favorite?productId=${key}&userId=${userId}`
+      `https://p3das.vercel.app/api/favorite?productId=${key}&userId=${userId}`,
+      {
+        cache: "no-store",
+      }
     );
 
     const favoriteData = (await favoriteResp.json()) as { isFavorite: boolean };

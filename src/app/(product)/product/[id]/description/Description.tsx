@@ -55,7 +55,7 @@ const Description = ({
     addToCart(product);
     setState((prev) => ({ ...prev, loading: true }));
     try {
-      const resp = await fetch(`${BASE_URL}/api/cart`, {
+      const resp = await fetch(`https://p3das.vercel.app/api/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const Description = ({
     setFavoriteState((prev) => ({ ...prev, loading: true }));
     try {
       const resp = await fetch(
-        `${BASE_URL}/api/favorite?productId=${id}&userId=${userId}`,
+        `https://p3das.vercel.app/api/favorite?productId=${id}&userId=${userId}`,
         {
           method: "POST",
           headers: {

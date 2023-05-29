@@ -30,7 +30,7 @@ const getQueryProducts = async (
   if (category && type) {
     try {
       const resp = await fetch(
-        `${BASE_URL}/api/search?q=${title}&category=${category}&type=${type}`,
+        `https://p3das.vercel.app/api/search?q=${title}&category=${category}&type=${type}`,
         {
           cache: "no-store",
         }
@@ -43,7 +43,7 @@ const getQueryProducts = async (
   } else if (category) {
     try {
       const resp = await fetch(
-        `${BASE_URL}/api/search?q=${title}&category=${category}`,
+        `https://p3das.vercel.app/api/search?q=${title}&category=${category}`,
         {
           cache: "no-store",
         }
@@ -56,7 +56,7 @@ const getQueryProducts = async (
   } else if (type) {
     try {
       const resp = await fetch(
-        `${BASE_URL}/api/search?q=${title}&type=${type}`,
+        `https://p3das.vercel.app/api/search?q=${title}&type=${type}`,
         {
           cache: "no-store",
         }
@@ -68,9 +68,12 @@ const getQueryProducts = async (
     } catch (e: any) {}
   } else {
     try {
-      const resp = await fetch(`${BASE_URL}/api/search?q=${title}`, {
-        cache: "no-store",
-      });
+      const resp = await fetch(
+        `https://p3das.vercel.app/api/search?q=${title}`,
+        {
+          cache: "no-store",
+        }
+      );
 
       const data = (await resp.json()) as { products: Product[] | [] };
 
