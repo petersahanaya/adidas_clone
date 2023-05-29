@@ -9,8 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import AlsoLike from "./alsoLike/AlsoLike";
 import { Session } from "next-auth";
 import Head from "next/head";
+import { BASE_URL } from "@/lib/config/url";
 
-const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
 const getProduct = async (key: string | string[]) => {
   try {

@@ -1,7 +1,7 @@
-import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 import Card from "@/app/(home)/card/Card";
 import ClientOnly from "@/components/clientOnly/ClientOnly";
 import CardLoading from "@/components/loading/card/CardLoading";
+import { BASE_URL } from "@/lib/config/url";
 import { Product } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 

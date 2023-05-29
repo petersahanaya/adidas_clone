@@ -7,7 +7,7 @@ import emptyAnimation from "../../../../public/empty-search.json";
 import { Fragment } from "react";
 import Card from "../card/Card";
 import Filter from "@/components/filter/Filter";
-import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
+import { BASE_URL } from "@/lib/config/url";
 
 type SearchPageProps = {
   params: {};

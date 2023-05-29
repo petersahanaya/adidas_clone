@@ -9,8 +9,7 @@ import Subtitle from "@components/subtitle/Subtitle";
 import { signIn } from "next-auth/react";
 import { useCallback, useTransition } from "react";
 import Heading from "@/components/heading/Heading";
-
-export const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+import { BASE_URL } from "@/lib/config/url";
 
 const SignInAuth = () => {
   const [loading, startTransition] = useTransition();

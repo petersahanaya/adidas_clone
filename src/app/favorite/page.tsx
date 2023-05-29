@@ -10,7 +10,7 @@ import LottieComp from "@components/lottie/LottieComp";
 import emptyAnimation from "../../../public/empty-lottie.json";
 import Heading from "@components/heading/Heading";
 import Sidebar from "@components/sidebar/Sidebar";
-import { BASE_URL } from "../(auth)/signIn/SignInAuth";
+import { BASE_URL } from "@/lib/config/url";
 
 type FavoritePageProps = {
   params: {};

@@ -1,6 +1,6 @@
 import { Product } from "@prisma/client";
 import Card from "../card/Card";
-import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
+import { BASE_URL } from "@/lib/config/url";
 
 const getProducts = async ({
   take,

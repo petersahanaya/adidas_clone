@@ -1,7 +1,7 @@
 "use client";
 
-import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 import { useCart } from "@/hooks/cart/cart_hooks";
+import { BASE_URL } from "@/lib/config/url";
 import { Product } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";

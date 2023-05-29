@@ -6,11 +6,11 @@ import LottieComp from "@components/lottie/LottieComp";
 import Sidebar from "@components/sidebar/Sidebar";
 import emptyAnimation from "../../../../../public/empty-lottie.json";
 
-import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 import { useCart } from "@/hooks/cart/cart_hooks";
 import { ConvertNumber } from "@/lib/functions/covertNumber";
 import { Session } from "next-auth";
 import Image from "next/image";
+import { BASE_URL } from "@/lib/config/url";
 
 type CartClientProps = {
   session: Session;

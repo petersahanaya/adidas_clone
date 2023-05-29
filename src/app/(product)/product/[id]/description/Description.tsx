@@ -1,10 +1,10 @@
 "use client";
 
-import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 import HeartIcon from "@/components/icons/heartIcon/HeartIcon";
 import LongArrow from "@/components/icons/longArrow/LongArrow";
 import Spinner from "@/components/spinner/Spinner";
 import { useCart } from "@/hooks/cart/cart_hooks";
+import { BASE_URL } from "@/lib/config/url";
 import { ConvertNumber } from "@/lib/functions/covertNumber";
 import Button from "@components/button/Button";
 import { Product } from "@prisma/client";

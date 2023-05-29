@@ -5,8 +5,8 @@ import ClientProduct from "./ClientProduct";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Head from "next/head";
+import { BASE_URL } from "@/lib/config/url";
 
-const BASE_URL = "http://localhost:3000";
 
 const getProduct = async (key: string | string[], userId: string) => {
   try {

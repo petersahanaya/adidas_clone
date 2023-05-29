@@ -6,7 +6,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { Product } from "@prisma/client";
 import { Fragment } from "react";
 import emptyAnimation from "../../../../public/empty-lottie.json";
-import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
+import { BASE_URL } from "@/lib/config/url";
 
 type ProductsPageProps = {
   params: {};
