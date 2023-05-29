@@ -3,20 +3,16 @@ import Header from "../homepage/header/Header";
 import Preview from "../homepage/preview/Preview";
 import Hot from "./hot/Hot";
 import Category from "./category/Category";
-import ClientOnly from "@/components/clientOnly/ClientOnly";
 
 export const metadata = {
-  title: "adidas",
-  description: "",
+  title: "Adidas",
 };
 
 const HomePage = () => {
   return (
     <main className="w-screen pb-10 overflow-hidden">
       <Header />
-      <ClientOnly>
-        <Preview />
-      </ClientOnly>
+      <Preview />
       {/* @ts-expect-error server components */}
       <Hot />
       <Category />

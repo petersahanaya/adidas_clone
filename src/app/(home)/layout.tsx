@@ -1,7 +1,6 @@
 import SessionProvide from "@providers/sessionProvider/SessionProvider";
-import "./globals.css";
+import "../globals.css";
 import { Poppins } from "next/font/google";
-import ReactQueryProvider from "@components/clientOnly/reactQueryProvider/ReactQueryProvider";
 import GenerateCart from "@components/generateCart/GenerateCart";
 import Footer from "@/components/footer/Footer";
 
@@ -19,12 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <ReactQueryProvider>
-          <SessionProvide>
-            <GenerateCart />
-            {children}
-          </SessionProvide>
-        </ReactQueryProvider>
+        <SessionProvide>
+          <GenerateCart />
+          {children}
+        </SessionProvide>
         {/* <Footer /> */}
       </body>
     </html>

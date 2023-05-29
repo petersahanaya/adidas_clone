@@ -1,5 +1,6 @@
 "use client";
 
+import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 import { useCart } from "@/hooks/cart/cart_hooks";
 import { Product } from "@prisma/client";
 import { useSession } from "next-auth/react";
@@ -13,13 +14,12 @@ const GenerateCart = () => {
     (async () => {
       try {
         const resp = await fetch(
-          `http://localhost:3000/api/cart?userId=${session!.user.id}`
+          `${BASE_URL}/api/cart?userId=${session!.user.id}`
         );
         const data = (await resp.json()) as { cart: Product[] };
 
         return loadProduct(data.cart);
       } catch (e: any) {
-        console.error(e);
         return loadProduct([]);
       }
     })();

@@ -4,6 +4,7 @@ import { Product } from "@prisma/client";
 import ClientProduct from "./ClientProduct";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Head from "next/head";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -39,8 +40,12 @@ const ProductWithId = async ({ params }: ProductIdProps) => {
 
   return (
     <>
+      <Head>
+        <title>Product | {product.product.title}</title>
+      </Head>
       <main className="w-screen pb-10 overflow-hidden">
         <Header isIcon={true} />
+        <div className="w-full border-t-[1px] border-t-stone-300"></div>
         <Sidebar />
         <ClientProduct
           session={session!}

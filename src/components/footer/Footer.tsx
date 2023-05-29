@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="w-screen p-1 bg-stone-900 flex flex-col justify-center items-center py-2">
+    <footer className="w-screen p-1 bg-stone-900 flex flex-col justify-center items-center py-2 mt-10">
       <section className="flex justify-start items-center gap-2 text-xs text-stone-100">
         <p>🇮🇩</p>
         <p>Indonesia</p>

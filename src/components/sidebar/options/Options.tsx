@@ -136,7 +136,7 @@ const Options = ({
     <section className={`${width}`}>
       <header
         onClick={() => setOpen((prev) => !prev)}
-        className="w-full border-b-[1px] border-b-stone-300 flex justify-between items-center p-2 px-4"
+        className="w-full flex justify-between items-center p-2 px-4"
       >
         <p className="text-xl uppercase font-[700] text-stone-600">{hint}</p>
         <ArrowIcon

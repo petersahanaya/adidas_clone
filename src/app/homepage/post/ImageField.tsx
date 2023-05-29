@@ -29,11 +29,6 @@ type ImageFieldProps = {
 };
 
 const ImageField = ({ setStep, handleSubmit, reset }: ImageFieldProps) => {
-  const postCloseOnPressed = usePostComponent(
-    (state) => state.togglePostComponent
-  );
-  const sidebarCloseOnPressed = useSidebar((state) => state.toggleSideBar);
-
   const [image, setImage] = useState<{
     previews: string[];
     images: File[] | null;
@@ -56,9 +51,7 @@ const ImageField = ({ setStep, handleSubmit, reset }: ImageFieldProps) => {
     const imageBlobs: string[] = [];
 
     files.forEach((file) => {
-      console.log(files);
       const imgSrc = URL.createObjectURL(file);
-      console.log(imgSrc);
 
       imageBlobs.push(imgSrc);
     });
@@ -84,10 +77,7 @@ const ImageField = ({ setStep, handleSubmit, reset }: ImageFieldProps) => {
           "Content-Type": "application/json",
         });
 
-        router.refresh();
-
-        postCloseOnPressed(false);
-        sidebarCloseOnPressed();
+        router.replace("/");
       } catch (e: unknown) {
         if (typeof e === "string") {
           setUpload((prev) => ({ ...prev, error: e as string }));
@@ -103,7 +93,7 @@ const ImageField = ({ setStep, handleSubmit, reset }: ImageFieldProps) => {
         reset();
       }
     },
-    [image.images, postCloseOnPressed, reset, router, sidebarCloseOnPressed]
+    [image.images, reset, router]
   );
 
   return (

@@ -16,11 +16,7 @@ export async function GET(req: Request) {
     include: { favorite: true },
   });
 
-  console.log({ find });
-
   const isFavorite = find?.favorite.find((product) => product.id === productId);
-
-  console.log({ isFavorite });
 
   if (isFavorite) {
     return NextResponse.json({ isFavorite: true });

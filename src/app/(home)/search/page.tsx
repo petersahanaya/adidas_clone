@@ -1,4 +1,3 @@
-import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 import { Product } from "@prisma/client";
 import Input from "./input/Input";
 import Header from "@/app/homepage/header/Header";
@@ -8,6 +7,7 @@ import emptyAnimation from "../../../../public/empty-search.json";
 import { Fragment } from "react";
 import Card from "../card/Card";
 import Filter from "@/components/filter/Filter";
+import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 
 type SearchPageProps = {
   params: {};
@@ -18,6 +18,10 @@ type SearchPageProps = {
   };
 };
 
+export const metadata = {
+  title: "Search",
+};
+
 const getQueryProducts = async (
   title: string,
   category?: string,
@@ -26,57 +30,52 @@ const getQueryProducts = async (
   if (category && type) {
     try {
       const resp = await fetch(
-        `http://localhost:3000/api/search?q=${title}&category=${category}&type=${type}`
+        `${BASE_URL}/api/search?q=${title}&category=${category}&type=${type}`,
+        {
+          cache: "no-store",
+        }
       );
 
       const data = (await resp.json()) as { products: Product[] | [] };
 
-      console.log(data);
-
       return data.products;
-    } catch (e: any) {
-      // console.error(e);
-    }
+    } catch (e: any) {}
   } else if (category) {
     try {
       const resp = await fetch(
-        `http://localhost:3000/api/search?q=${title}&category=${category}`
+        `${BASE_URL}/api/search?q=${title}&category=${category}`,
+        {
+          cache: "no-store",
+        }
       );
 
       const data = (await resp.json()) as { products: Product[] | [] };
 
-      console.log(data);
-
       return data.products;
-    } catch (e: any) {
-      // console.error(e);
-    }
+    } catch (e: any) {}
   } else if (type) {
     try {
       const resp = await fetch(
-        `http://localhost:3000/api/search?q=${title}&type=${type}`
+        `${BASE_URL}/api/search?q=${title}&type=${type}`,
+        {
+          cache: "no-store",
+        }
       );
 
       const data = (await resp.json()) as { products: Product[] | [] };
 
-      console.log(data);
-
       return data.products;
-    } catch (e: any) {
-      // console.error(e);
-    }
+    } catch (e: any) {}
   } else {
     try {
-      const resp = await fetch(`http://localhost:3000/api/search?q=${title}`);
+      const resp = await fetch(`${BASE_URL}/api/search?q=${title}`, {
+        cache: "no-store",
+      });
 
       const data = (await resp.json()) as { products: Product[] | [] };
 
-      console.log(data);
-
       return data.products;
-    } catch (e: any) {
-      // console.error(e);
-    }
+    } catch (e: any) {}
   }
 };
 
@@ -105,21 +104,18 @@ const typeOptions = [
 ];
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
-  console.log(searchParams);
   const products = await getQueryProducts(
     searchParams.q,
     searchParams.category,
     searchParams.type
   );
 
-  console.log({ searchParams });
-
   return (
     <main className="w-screen h-screen pb-24 overflow-x-hidden">
       <Header isIcon />
       <Sidebar />
       <Input query={searchParams.q} />
-      <section className="px-4">
+      <section className="px-4 lg:w-[200px] sm:w-[200px]">
         <Filter
           hint="choose category"
           keyAdded="category"
@@ -141,10 +137,16 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           />
         ))}
 
-      <section className="w-full grid grid-cols-2 justify-items-center">
+      <section
+        className={`w-full grid grid-cols-2 gap-2 lg:mt-3 justify-items-center sm:grid-cols-3 lg:grid-cols-4`}
+      >
         {products?.map((product, idx) => (
           <Fragment key={idx}>
-            <Card {...product} />
+            <Card
+              {...product}
+              width="w-[120px] xs:w-[200px] lg:w-[230px] xl:w-[250px]"
+              height="h-[180px] sm:h-[220px] lg:h-[280px] xl:h-[280px]"
+            />
           </Fragment>
         ))}
       </section>

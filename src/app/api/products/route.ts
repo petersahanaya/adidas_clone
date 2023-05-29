@@ -117,6 +117,5 @@ export async function GET(req: Request) {
       return NextResponse.json({ products: products || [] });
     }
   } catch (e) {
-    console.log(e);
   }
 }

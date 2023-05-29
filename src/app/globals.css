@@ -4,7 +4,7 @@
 
 /* Hide the scrollbar for all elements */
 ::-webkit-scrollbar {
-  width: 0.5em;
+  width: 0px;
 }
 
 /* Track */

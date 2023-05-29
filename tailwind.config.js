@@ -22,7 +22,11 @@ module.exports = {
       },
     },
     screens : {
-      'xs' : '450px'
+      'xs' : '450px',
+      'sm' : '640px',
+      'md' : '900px',
+      'lg' : '1024px',
+      'xl' : '1280px'
     }
   },
   plugins: [],

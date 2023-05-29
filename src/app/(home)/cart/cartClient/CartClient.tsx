@@ -1,15 +1,16 @@
 "use client";
-import AdidasIcon from "@/components/icons/adidasIcon/AdidasIcon";
-import Image from "next/image";
-import { ConvertNumber } from "@/lib/functions/covertNumber";
-import Button from "@/components/button/Button";
-import Link from "next/link";
+import Header from "@/app/homepage/header/Header";
+import Button from "@components/button/Button";
+import LongArrow from "@components/icons/longArrow/LongArrow";
+import LottieComp from "@components/lottie/LottieComp";
+import Sidebar from "@components/sidebar/Sidebar";
+import emptyAnimation from "../../../../../public/empty-lottie.json";
+
 import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 import { useCart } from "@/hooks/cart/cart_hooks";
+import { ConvertNumber } from "@/lib/functions/covertNumber";
 import { Session } from "next-auth";
-import LottieComp from "@/components/lottie/LottieComp";
-import emptyAnimation from "../../../../../public/empty-lottie.json";
-import CloseIcon from "@/components/icons/closeIcon/CloseIcon";
+import Image from "next/image";
 
 type CartClientProps = {
   session: Session;
@@ -38,94 +39,132 @@ const CartClient = ({ session }: CartClientProps) => {
       removeOnPressed(productId);
 
       const data = await resp.json();
-    } catch (e: any) {
-      console.error(e);
-    }
+    } catch (e: any) {}
   };
   return (
-    <>
-      <header className="w-full flex justify-around items-center">
-        <Link href="/">
-          <AdidasIcon width={40} height={40} />
-        </Link>
-        <h3 className="text-stone-700 font-[800] text-2xl uppercase tracking-tight">
-          cart
-        </h3>
+    <main className="w-full pb-8">
+      <Header isIcon />
+      <Sidebar />
+      <header className="p-3 w-full flex justify-start items-center gap-2 border-b-[1px] border-b-stone-200">
+        <h3 className="text-3xl font-[700] uppercase">Your Bag</h3>
+        <span>-</span>
+        {cart.length !== 0 ? (
+          <p className="font-[300] text-2xl uppercase tracking-tight">
+            {cart.length} item
+          </p>
+        ) : (
+          <p className="font-[300] text-2xl uppercase tracking-tight">empty</p>
+        )}
       </header>
       {cart.length ? (
-        <section className="flex flex-col justify-start items-start gap-8 w-full px-3">
-          {cart
-            .sort((a, b) => a.price - b.price)
-            .map((product, idx) => (
-              <section className="w-full p-1 h-[96px] relative" key={idx}>
-                <span
-                  onClick={() => onDoubleClick(product.id)}
-                  className="absolute top-0 right-0 bg-red-500 p-2 rounded-sm"
+        <section className="flex flex-col justify-start items-start lg:flex-row gap-8 w-full px-3 mt-6">
+          <nav className="w-full h-full lg:flex flex-col justify-start items-start gap-3 lg:w-[60%] lg:h-full overflow-y-scroll">
+            {cart
+              .sort((a, b) => a.price - b.price)
+              .map((product, idx) => (
+                <section
+                  className="w-full h-[200px] xs:h-[230px] overflow-hidden p-1 flex justify-between sm:justify-start items-start gap-3 border-b-[1px] border-b-stone-300 pb-5"
+                  key={idx}
                 >
-                  <CloseIcon width={10} height={10} />
-                </span>
-                <nav
-                  onDoubleClick={() => onDoubleClick(product.id)}
-                  className="flex bg-[#EDEBEE] justify-start items-center gap-2"
-                >
-                  <div className="w-[90px] h-[79px] xs:w-[120px] relative">
+                  <div
+                    style={{ flex: "0 0 40%" }}
+                    className="relative w-[40%] h-full"
+                  >
                     <Image
-                      className="object-cover xs:object-contain rounded-md"
+                      className="w-full h-full object-contain"
                       src={product.previewSrc}
-                      fill
                       alt={product.title}
+                      fill
                     />
                   </div>
-                  <div className="overflow-hidden">
-                    <h4 className="font-[300] text-sm xs:text-lg xs:font-[400] text-ellipsis overflow-hidden whitespace-nowrap">
-                      {product.title}
-                    </h4>
-                    <span className="w-full flex justify-start items-center gap-3">
-                      <p className="text-xs text-stone-600">
-                        {product.category}
-                      </p>
-                      |
-                      <p className="text-xs font-[500] text-stone-600">
-                        {ConvertNumber(product.price)}
-                      </p>
-                    </span>
-                  </div>
-                </nav>
-                <div className="w-full h-[35px] flex justify-start items-center bg-stone-800 px-3">
-                  <p className="flex-1 text-sm text-stone-100">
-                    {product.count}
-                  </p>
-                  <div className="px-3">
-                    <span
-                      onClick={() => decreaseOnPressed(product.id)}
-                      className="px-5 text-lg py-2 bg-white"
-                    >
-                      {"<"}
-                    </span>
-                    <span
-                      onClick={() => increaseOnPressed(product.id)}
-                      className="px-5 text-lg py-2 bg-white ml-3"
-                    >
-                      {">"}
-                    </span>
-                  </div>
-                </div>
-              </section>
-            ))}
-          <section className="mt-5 px-3">
-            <div>
-              <h3 className="uppercase text-3xl font-[700] tracking-tight">
-                total
-              </h3>
-              <p className="text-sm font-[300]">
-                {ConvertNumber(cart.reduce((a, b) => a + b.price, 0))}
-              </p>
-            </div>
-          </section>
+                  <aside className="flex-1">
+                    <article className="sm:flex justify-around items-center lg:inline-block">
+                      <section className="flex flex-col justify-start items-start gap-2">
+                        <h3 className="text-md xs:text-lg text-ellipsis overflow-hidden whitespace-nowrap font-[500] uppercase">
+                          {product.title}
+                        </h3>
+                        <p className="text-xs xs:text-sm font-[300] text-stone-600">
+                          Gender : {product.category}
+                        </p>
+                        <p className="text-xs xs:text-sm font-[300] text-stone-600">
+                          Size : {product.size}
+                        </p>
+                        <p className="text-sm font-[300] sm:hidden text-stone-600 lg:inline-block">
+                          {ConvertNumber(product.price)}
+                        </p>
+                        <p
+                          onClick={() => onDoubleClick(product.id)}
+                          className="font-[300] cursor-pointer hover:text-stone-900 text-xs xs:text-sm  uppercase tracking-wider underline text-stone-500"
+                        >
+                          delete
+                        </p>
+                      </section>
 
-          <section className="px-3 flex-1 w-full ">
-            <Button type="button">Buy</Button>
-          </section>
+                      <section className="mt-4 sm:mt-8">
+                        <div className="flex justify-start items-center gap-3 sm:mb-4">
+                          <button
+                            onClick={() => decreaseOnPressed(product.id)}
+                            disabled={product.count === 1}
+                            className="text-sm p-1 px-4 border-stone-400 border-[1px] xs:text-md xs:p-2 xs:px-6"
+                          >
+                            -
+                          </button>
+                          <p className="text-sm font-[300] xs:text-md">
+                            {product.count}
+                          </p>
+                          <button
+                            onClick={() => increaseOnPressed(product.id)}
+                            disabled={product.count === 4}
+                            className="text-sm p-1 px-4 border-stone-400 border-[1px] xs:text-md xs:p-2 xs:px-6"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <span className="hidden sm:inline-block lg:hidden">
+                          <p className="text-md font-[300] text-stone-700">
+                            {ConvertNumber(product.price)}
+                          </p>
+                        </span>
+                      </section>
+                    </article>
+                  </aside>
+                </section>
+              ))}
+          </nav>
+
+          <nav className="w-full h-full lg:flex flex-col justify-center items-start lg:bg-stone-200 lg:p-3 lg:pb-5 lg:w-[40%]">
+            <section className="w-full mt-5 px-3">
+              <header>
+                <h3 className="font-[700] text-2xl uppercase">
+                  Order Summary :
+                </h3>
+              </header>
+              <article className="px-5 flex flex-col justify-center items-start gap-3 mt-3 lg:bg-white lg:p-2 lg:rounded-sm">
+                <section className="w-full font-[300] text-sm uppercase border-b-[1px] border-b-stone-300 pb-2">
+                  {cart.length} products
+                </section>
+                <section className="w-full font-[300] text-sm uppercase border-b-[1px] border-b-stone-300 pb-2 flex justify-between items-center">
+                  <p>product total</p>
+                  <p>{ConvertNumber(cart.reduce((a, b) => a + b.price, 0))}</p>
+                </section>
+                <section className="w-full font-[300] text-sm uppercase border-b-[1px] border-b-stone-300 pb-2 flex justify-between items-center">
+                  <p>Delivery</p>
+                  <p>Free</p>
+                </section>
+              </article>
+            </section>
+
+            <section className="px-3 lg:mt-4 flex-1 w-full">
+              <Button
+                padding="p-2 px-6"
+                textColor="text-white text-md"
+                type="button"
+              >
+                Check out
+                <LongArrow width={26} height={26} />
+              </Button>
+            </section>
+          </nav>
         </section>
       ) : (
         <LottieComp
@@ -135,8 +174,10 @@ const CartClient = ({ session }: CartClientProps) => {
           subtitle="go and add some product."
         />
       )}
-    </>
+    </main>
   );
 };
 
 export default CartClient;
+
+//ConvertNumber(cart.reduce((a, b) => a + b.price, 0))

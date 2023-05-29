@@ -10,6 +10,7 @@ import LottieComp from "@components/lottie/LottieComp";
 import emptyAnimation from "../../../public/empty-lottie.json";
 import Heading from "@components/heading/Heading";
 import Sidebar from "@components/sidebar/Sidebar";
+import { BASE_URL } from "../(auth)/signIn/SignInAuth";
 
 type FavoritePageProps = {
   params: {};
@@ -17,6 +18,10 @@ type FavoritePageProps = {
     type: string;
     category: string;
   };
+};
+
+export const metadata = {
+  title: "Favorite",
 };
 
 const getFavoriteProducts = async ({
@@ -31,28 +36,39 @@ const getFavoriteProducts = async ({
   try {
     if (category && type) {
       const resp = await fetch(
-        `http://localhost:3000/api/like?userId=${userId}&category=${category}&type=${type}`
+        `${BASE_URL}/api/like?userId=${userId}&category=${category}&type=${type}`,
+        {
+          cache: "no-store",
+        }
       );
       const data = (await resp.json()) as { products: Product[] };
 
       return data;
     } else if (category) {
       const resp = await fetch(
-        `http://localhost:3000/api/like?userId=${userId}&category=${category}`
+        `${BASE_URL}/api/like?userId=${userId}&category=${category}`,
+        {
+          cache: "no-store",
+        }
       );
       const data = (await resp.json()) as { products: Product[] };
 
       return data;
     } else if (type) {
       const resp = await fetch(
-        `http://localhost:3000/api/like?userId=${userId}&type=${type}`
+        `${BASE_URL}/api/like?userId=${userId}&type=${type}`,
+        {
+          cache: "no-store",
+        }
       );
       const data = (await resp.json()) as { products: Product[] };
 
       return data;
     }
 
-    const resp = await fetch(`http://localhost:3000/api/like?userId=${userId}`);
+    const resp = await fetch(`${BASE_URL}/api/like?userId=${userId}`, {
+      cache: "no-store",
+    });
     const data = (await resp.json()) as { products: Product[] };
 
     return data;
@@ -100,12 +116,14 @@ const FavoritePage = async ({ params, searchParams }: FavoritePageProps) => {
       <Header isIcon />
       <Sidebar />
       <section className="w-full px-4 border-t-[1px] border-t-stone-300 pt-6">
-        <Filter hint="choose a type" keyAdded="type" options={typeOptions} />
-        <Filter
-          hint="choose a category"
-          keyAdded="category"
-          options={categoryOptions}
-        />
+        <nav className="lg:w-[200px] sm:w-[200px]">
+          <Filter hint="choose a type" keyAdded="type" options={typeOptions} />
+          <Filter
+            hint="choose a category"
+            keyAdded="category"
+            options={categoryOptions}
+          />
+        </nav>
         <span className="px-6">
           <Heading>Favorite</Heading>
         </span>
@@ -113,7 +131,7 @@ const FavoritePage = async ({ params, searchParams }: FavoritePageProps) => {
       <section className="mt-2">
         {products.length ? (
           <nav
-            className={`px-4 grid grid-cols-2 ${
+            className={`px-4 grid grid-cols-2 sm:grid-cols-3 ${
               products.length === 1
                 ? "justify-items-start"
                 : "justify-items-center"
@@ -121,7 +139,11 @@ const FavoritePage = async ({ params, searchParams }: FavoritePageProps) => {
           >
             {products.map((product, idx) => (
               <Fragment key={idx}>
-                <Card {...product} />
+                <Card
+                  {...product}
+                  width="w-[120px] xs:w-[200px] lg:w-[230px] xl:w-[250px]"
+                  height="h-[180px] sm:h-[220px] lg:h-[280px] xl:h-[280px]"
+                />
               </Fragment>
             ))}
           </nav>

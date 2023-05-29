@@ -19,7 +19,7 @@ const listOfCategory = [
 
 const Category = () => {
   return (
-    <main className="w-screen px-4 flex flex-col gap-2">
+    <main className="w-screen px-4 flex flex-col md:flex-row gap-2">
       {listOfCategory.map((category, idx) => (
         <section key={idx} className="w-full h-[100px] relative rounded-lg">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-stone-800/90 to-transparent z-10"></div>

@@ -95,8 +95,6 @@ const Filter = ({ hint, options, width = "w-full", keyAdded }: FilterProps) => {
     router.replace(`${origin}/${path}?${queries}`);
   };
 
-  console.log({ selected });
-
   return (
     <section className={`${width}`}>
       <header
@@ -123,19 +121,21 @@ const Filter = ({ hint, options, width = "w-full", keyAdded }: FilterProps) => {
               exit={{ height: "0", opacity: 0.6 }}
               transition={{ bounce: 0.2, duration: 0.3, ease: "easeOut" }}
             >
-              {options.map((option, idx) => (
-                <section
-                  onClick={() => onPressedChooseValue(idx)}
-                  className={`w-full bg-stone-200 p-2 rounded-sm text-sm  ${
-                    active === idx
-                      ? "bg-stone-900 text-stone-100"
-                      : "text-stone-800"
-                  }`}
-                  key={idx}
-                >
-                  <p>{option.value}</p>
-                </section>
-              ))}
+              <div className="mb-3">
+                {options.map((option, idx) => (
+                  <section
+                    onClick={() => onPressedChooseValue(idx)}
+                    className={`w-full bg-stone-200 p-2 rounded-sm text-sm  ${
+                      active === idx
+                        ? "bg-stone-900 text-stone-100"
+                        : "text-stone-800"
+                    }`}
+                    key={idx}
+                  >
+                    <p>{option.value}</p>
+                  </section>
+                ))}
+              </div>
             </motion.nav>
           )}
         </AnimatePresence>

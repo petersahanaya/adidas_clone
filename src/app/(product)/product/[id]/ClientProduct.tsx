@@ -8,8 +8,9 @@ import { Product } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import AlsoLike from "./alsoLike/AlsoLike";
 import { Session } from "next-auth";
+import Head from "next/head";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
 const getProduct = async (key: string | string[]) => {
   try {
@@ -41,22 +42,34 @@ const ClientProduct = ({
 
   return (
     <>
-      <Preview product={data!.product} />
-      <Tag />
-      <section className="px-4 py-3 w-full">
-        <Description
-          id={id}
-          isFavorite={placeholderData.isFavorite}
-          userId={session.user.id!}
-          product={data!.product}
-          size={data!.product.size}
-          stock={data!.product.stock}
-          title={data!.product.title}
-          description={data!.product.description}
-        />
+      <Head>
+        <title>Product | {data?.product.title}</title>
+      </Head>
+      <section className="w-screen lg:flex">
+        <div
+          style={{ flex: "0 0 70%" }}
+          className="w-full flex-auto lg:w-[70%] xl:w-[70%] md:w-[70%]"
+        >
+          <Preview product={data!.product} />
+          <Tag />
+        </div>
+        <section className="px-4 py-3 w-full">
+          <Description
+            id={id}
+            isFavorite={placeholderData.isFavorite}
+            userId={session.user.id!}
+            product={data!.product}
+            size={data!.product.size}
+            stock={data!.product.stock}
+            title={data!.product.title}
+            description={data!.product.description}
+          />
+        </section>
       </section>
 
-      <AlsoLike type={data!.product.type} />
+      <div className="sm:mt-10 lg:mt-0 w-full md:w-[70%]">
+        <AlsoLike type={data!.product.type} />
+      </div>
     </>
   );
 };

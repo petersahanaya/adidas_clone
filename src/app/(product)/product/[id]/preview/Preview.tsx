@@ -5,6 +5,7 @@ import { Product } from "@prisma/client";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 type PreviewProps = {
   product: Product;
@@ -12,33 +13,36 @@ type PreviewProps = {
 
 const Preview = ({ product }: PreviewProps) => {
   const [selectedIdx, setSelected] = useState(0);
+  const isMiniLaptop = useMediaQuery({ minWidth: "900px" });
 
   return (
-    <section className="bg-[#EDEBEE] flex flex-col justify-center items-start">
-      <nav className="px-5 py-3">
-        <div className="w-full flex justify-center items-center gap-1">
-          <p className="text-sm underline lowercase tracking-tighter text-stone-800 font-[300]">
-            {product.category}
-          </p>
-          <p className="text-[.7rem]">/</p>
-          <p className="text-sm underline lowercase tracking-tighter text-stone-800 font-[300]">
-            {product.type}
-          </p>
-        </div>
-        <span className="mt-2">
-          <h2 className="text-4xl font-[400] text-stone-800 tracking-wider">
-            {product.title}
-          </h2>
-        </span>
+    <section className="bg-[#EDEBEE] w-full md:h-[450px] flex flex-col justify-center items-start">
+      {!isMiniLaptop && (
+        <nav className="px-5 py-3">
+          <div className="w-full flex justify-center items-center gap-1">
+            <p className="text-sm underline lowercase tracking-tighter text-stone-800 font-[300]">
+              {product.category}
+            </p>
+            <p className="text-[.7rem]">/</p>
+            <p className="text-sm underline lowercase tracking-tighter text-stone-800 font-[300]">
+              {product.type}
+            </p>
+          </div>
+          <span className="mt-2">
+            <h2 className="text-4xl sm:text-5xl font-[400] text-stone-800 tracking-wider">
+              {product.title}
+            </h2>
+          </span>
 
-        <div>
-          <p className="font-[600] text-stone-900 tracking-widest">
-            {ConvertNumber(Number(product.price))}
-          </p>
-        </div>
-      </nav>
+          <div>
+            <p className="sm:text-lg font-[600] text-stone-900 tracking-widest">
+              {ConvertNumber(Number(product.price))}
+            </p>
+          </div>
+        </nav>
+      )}
 
-      <div className="w-full h-[300px] relative">
+      <div className="w-full h-[300px] lg:h-[450px] relative">
         <nav className="flex justify-center items-center gap-3 mt-3 absolute bottom-[20px] left-[10px] z-10">
           {Array(product.previewImages.length)
             .fill(1)

@@ -25,11 +25,11 @@ const Input = ({ query }: InputProps) => {
   };
 
   return (
-    <header className="w-full h-[11vh] px-4 border-t-[1px]  border-t-stone-200 flex justify-around items-center gap-2">
+    <header className="w-full h-[11vh] px-4 border-t-[1px]  border-t-stone-200 flex justify-around lg:justify-between items-center gap-2">
       <input
         onKeyDown={onEnterSearchProduct}
         ref={inputRef}
-        className="p-2 py-3 tracking-tight rounded-sm bg-stone-500 text-white placeholder:text-stone-200 outline-none text-sm w-[80%]"
+        className="p-2 py-3 tracking-tight rounded-sm bg-stone-500 text-white placeholder:text-stone-200 outline-none text-sm w-[80%] lg:w-full sm:w-full"
         placeholder="search for product"
       />
       <button

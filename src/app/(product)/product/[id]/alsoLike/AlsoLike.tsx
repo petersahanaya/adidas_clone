@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 import Card from "@/app/(home)/card/Card";
 import ClientOnly from "@/components/clientOnly/ClientOnly";
 import CardLoading from "@/components/loading/card/CardLoading";
@@ -13,7 +14,7 @@ const getProducts = async ({
   skip: number;
   type: string;
 }) => {
-  const url = `http://localhost:3000/api/products?take=${take}&limit=${skip}`;
+  const url = `${BASE_URL}/api/products?take=${take}&limit=${skip}`;
 
   try {
     const resp = await fetch(url, {
@@ -24,7 +25,6 @@ const getProducts = async ({
 
     return data;
   } catch (e: any) {
-    console.log(e);
     throw new Error(e);
   }
 };
@@ -32,6 +32,8 @@ const getProducts = async ({
 type AlsoLikeProps = {
   type: string;
 };
+
+//lg:w-[700px] xl:w-[900px]
 
 const AlsoLike = ({ type }: AlsoLikeProps) => {
   const { data, isLoading } = useQuery({
@@ -43,18 +45,20 @@ const AlsoLike = ({ type }: AlsoLikeProps) => {
     return (
       <ClientOnly>
         <section className="w-full flex justify-start items-center gap-2 overflow-x-scroll">
-          {Array(8).fill(1).map((_, idx) => (
-            <nav key={idx}>
-              <CardLoading/>
-            </nav>
-          ))}
+          {Array(8)
+            .fill(1)
+            .map((_, idx) => (
+              <nav key={idx}>
+                <CardLoading />
+              </nav>
+            ))}
         </section>
       </ClientOnly>
     );
 
   return (
-    <section className="px-2 mt-6">
-      <h2 className="text-2xl font-[600] text-stone-800 tracking-tight text-center uppercase mb-3">
+    <section className="px-2 mt-6 w-full">
+      <h2 className="text-2xl sm:text-3xl sm:mt-9 font-[600] text-stone-800 tracking-tight uppercase mb-3">
         you may also like
       </h2>
       {!data?.products.length && <p>there no product 😁</p>}
@@ -63,7 +67,11 @@ const AlsoLike = ({ type }: AlsoLikeProps) => {
         <section className="flex justify-start items-center gap-2 overflow-x-scroll">
           {data!.products!.map((product, idx) => (
             <nav key={idx}>
-              <Card {...product} />
+              <Card
+                {...product}
+                width="w-[120px] xs:w-[200px] lg:w-[230px]"
+                height="h-[180px] sm:h-[280px] lg:h-[280px]"
+              />
             </nav>
           ))}
         </section>

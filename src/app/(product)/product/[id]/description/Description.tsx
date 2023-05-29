@@ -1,14 +1,16 @@
 "use client";
 
 import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
-import ArrowIcon from "@/components/icons/arrowIcon/ArrowIcon";
 import HeartIcon from "@/components/icons/heartIcon/HeartIcon";
+import LongArrow from "@/components/icons/longArrow/LongArrow";
 import Spinner from "@/components/spinner/Spinner";
 import { useCart } from "@/hooks/cart/cart_hooks";
+import { ConvertNumber } from "@/lib/functions/covertNumber";
 import Button from "@components/button/Button";
 import { Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 type DescriptionProps = {
   title: string;
@@ -34,6 +36,8 @@ const Description = ({
   const cart = useCart((state) => state.products);
   const addToCart = useCart((state) => state.addToCart);
   const router = useRouter();
+  const isMiniTablet = useMediaQuery({ minWidth: "640px" });
+  const isMiniLaptop = useMediaQuery({ minWidth: "900px" });
 
   const [state, setState] = useState({
     error: false,
@@ -133,21 +137,49 @@ const Description = ({
   }, [id, router, userId]);
 
   return (
-    <>
-      <div>
-        <p className="text-xs text-stone-700">{size}</p>
+    <main className=" md:fixed top-[60px] right-0 lg:w-[30%] md:w-[30%] lg:bg-white">
+      {!isMiniLaptop && (
         <div>
-          <p className="text-red-400 text-[.7rem] font-[500] uppercase">
-            {stock} stock
-          </p>
+          <p className="text-xs text-stone-700 sm:text-md">{size}</p>
+          <div>
+            <p className="text-red-400 sm:text-md text-[.7rem] font-[500] uppercase">
+              {stock} stock
+            </p>
+          </div>
         </div>
-      </div>
+      )}
+      {isMiniLaptop && (
+        <>
+          <nav className="px-5 py-3 md:px-4">
+            <div className="w-full flex justify-start items-center gap-1">
+              <p className="text-sm underline lowercase tracking-tighter text-stone-800 font-[300]">
+                {product.category}
+              </p>
+              <p className="text-[.7rem]">/</p>
+              <p className="text-sm underline lowercase tracking-tighter text-stone-800 font-[300]">
+                {product.type}
+              </p>
+            </div>
+            <span className="mt-2">
+              <h2 className="text-4xl sm:text-5xl font-[400] text-stone-800 tracking-wider">
+                {product.title}
+              </h2>
+            </span>
+
+            <div>
+              <p className="sm:text-lg font-[600] lg:text-xs text-stone-900 tracking-widest">
+                {ConvertNumber(Number(product.price))}
+              </p>
+            </div>
+          </nav>
+        </>
+      )}
       <div className="flex justify-around items-end gap-2">
         <div onClick={onPressedAddToCart}>
           <Button
-            background="bg-stone-400"
-            width="w-[160px] xs:w-[350px] flex-1"
-            textColor="text-stone-100"
+            background="bg-stone-900"
+            width="w-[160px] xs:w-[350px] sm:w-[450px] lg:w-[200px] md:w-[200px] md:text-sm flex-1"
+            textColor="text-stone-100 sm:text-xl sm:font-[500] lg:text-sm"
             padding="mt-4 p-4"
             type="button"
           >
@@ -156,7 +188,10 @@ const Description = ({
             ) : (
               <Spinner width={23} height={23} color="#ffffff" />
             )}
-            <ArrowIcon color="#ffffff" width={10} height={10} />
+            <LongArrow
+              width={isMiniTablet ? 30 : 20}
+              height={isMiniTablet ? 30 : 20}
+            />
           </Button>
         </div>
         <button
@@ -165,13 +200,17 @@ const Description = ({
           className="border-[1px] p-[.55rem] border-stone-400"
         >
           {!favoriteState.loading ? (
-            <HeartIcon width={28} height={28} isLike={isFavorite} />
+            <HeartIcon
+              width={isMiniTablet ? 32 : 28}
+              height={isMiniTablet ? 32 : 28}
+              isLike={isFavorite}
+            />
           ) : (
             <Spinner height={28} width={28} />
           )}
         </button>
       </div>
-      <div className="mt-6">
+      <div className="mt-6 sm:mb-10 lg:mt-20 md:px-3">
         <span>
           <h2 className="text-4xl font-[600] text-stone-800 tracking-wider">
             {title}
@@ -181,7 +220,7 @@ const Description = ({
           {description}
         </p>
       </div>
-    </>
+    </main>
   );
 };
 

@@ -2,13 +2,7 @@
 
 import ArrowIcon from "@/components/icons/arrowIcon/ArrowIcon";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { PostFormValues, PostKeyEnum } from "../post/Post";
 

@@ -12,9 +12,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import StepButton from "./StepButton";
-import { DevTool } from "@hookform/devtools";
 import Toast from "@/components/toast/Toast";
 import { isEmpty } from "@/lib/functions/IsEmpty";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export enum PostStepEnum {
   FieldStep = "FIELD_STEP",
@@ -94,7 +95,7 @@ const categoryOptions = [
 ];
 
 const Post = () => {
-  const postComponent = usePostComponent();
+  // const postComponent = usePostComponent();
 
   const {
     register,
@@ -123,58 +124,50 @@ const Post = () => {
 
   return (
     <>
-      <AnimatePresence initial={false}>
-        {postComponent.isOpen && (
-          <motion.main
-            initial={{ opacity: 0.6, translateX: "100%" }}
-            animate={{ opacity: 1, translateX: "0" }}
-            exit={{ opacity: 0.6, translateX: "100%" }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="w-screen fixed top-0 left-0 z-40 h-screen overflow-x-hidden bg-white"
-          >
-            <header className="flex justify-between items-center p-2 px-4 border-b-[1px] border-b-stone-300">
-              <AdidasIcon width={45} height={45} />
-              <span
-                role="button"
-                onClick={() => postComponent.togglePostComponent(false)}
-              >
-                <CloseIcon width={25} height={25} />
-              </span>
-            </header>
+      <motion.main
+        initial={{ opacity: 0.6, translateX: "100%" }}
+        animate={{ opacity: 1, translateX: "0" }}
+        exit={{ opacity: 0.6, translateX: "100%" }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="w-screen fixed top-0 left-0 z-40 h-screen overflow-x-hidden bg-white"
+      >
+        <header className="flex justify-between items-center p-2 px-4 border-b-[1px] border-b-stone-300">
+          <AdidasIcon width={45} height={45} />
+          <Link href="/">
+            <CloseIcon width={25} height={25} />
+          </Link>
+        </header>
 
-            <Form
-              onSubmit={handleSubmit(onSave)}
-              style="w-[80%] flex flex-col justify-center m-auto items-center mt-6"
-            >
-              {step === PostStepEnum.FieldStep && (
-                <FieldStep
-                  categoryOptions={categoryOptions}
-                  typeOptions={typeOptions}
-                  setFormValue={setValue}
-                  errors={errors}
-                  register={register}
-                  stockOptions={stockOptions}
-                />
-              )}
+        <Form
+          onSubmit={handleSubmit(onSave)}
+          style="w-[80%] lg:w-[60%] flex flex-col justify-center m-auto items-center mt-6"
+        >
+          {step === PostStepEnum.FieldStep && (
+            <FieldStep
+              categoryOptions={categoryOptions}
+              typeOptions={typeOptions}
+              setFormValue={setValue}
+              errors={errors}
+              register={register}
+              stockOptions={stockOptions}
+            />
+          )}
 
-              {step === PostStepEnum.ImageStep && (
-                <ImageField
-                  handleSubmit={handleSubmit}
-                  reset={reset}
-                  setStep={setStep}
-                />
-              )}
+          {step === PostStepEnum.ImageStep && (
+            <ImageField
+              handleSubmit={handleSubmit}
+              reset={reset}
+              setStep={setStep}
+            />
+          )}
 
-              {isEmpty(watch()) && <Toast message="all field are required" />}
+          {isEmpty(watch()) && <Toast message="all field are required" />}
 
-              {step === PostStepEnum.FieldStep && (
-                <StepButton setStep={setStep} step={step} fields={watch()} />
-              )}
-            </Form>
-          </motion.main>
-        )}
-      </AnimatePresence>
-      {/* <DevTool control={control} /> */}
+          {step === PostStepEnum.FieldStep && (
+            <StepButton setStep={setStep} step={step} fields={watch()} />
+          )}
+        </Form>
+      </motion.main>
     </>
   );
 };

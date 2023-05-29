@@ -8,20 +8,26 @@ import Spinner from "@components/spinner/Spinner";
 import Subtitle from "@components/subtitle/Subtitle";
 import { signIn } from "next-auth/react";
 import { useCallback, useTransition } from "react";
+import Heading from "@/components/heading/Heading";
 
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
 const SignInAuth = () => {
-  const [loading, startTransition] = useTransition()
+  const [loading, startTransition] = useTransition();
 
   const SignIn = useCallback(async (type: "google" | "facebook" | "github") => {
     startTransition(() => {
       signIn(type, { callbackUrl: BASE_URL + "/" });
-    })
+    });
   }, []);
 
   return (
     <main className="mt-10">
+      <section className="hidden lg:inline-block">
+        <Heading size="text-5xl" color="text-stone-800 sm:text-7xl">
+          Sign In
+        </Heading>
+      </section>
       <ListTile
         padding="p-2 lg:mt-6"
         border="border-[1px] border-stone-300 rounded-sm"

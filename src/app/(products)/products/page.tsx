@@ -6,6 +6,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { Product } from "@prisma/client";
 import { Fragment } from "react";
 import emptyAnimation from "../../../../public/empty-lottie.json";
+import { BASE_URL } from "@/app/(auth)/signIn/SignInAuth";
 
 type ProductsPageProps = {
   params: {};
@@ -13,6 +14,10 @@ type ProductsPageProps = {
     category: string;
     type: string;
   };
+};
+
+export const metadata = {
+  title: "Products",
 };
 
 const getProducts = async ({
@@ -26,7 +31,7 @@ const getProducts = async ({
   category: string;
   type: string;
 }): Promise<{ products: Product[] }> => {
-  const url = `http://localhost:3000/api/products?category=${category}&take=${take}&limit=${skip}&type=${type}`;
+  const url = `${BASE_URL}/api/products?category=${category}&take=${take}&limit=${skip}&type=${type}`;
 
   try {
     const resp = await fetch(url, {
@@ -37,7 +42,6 @@ const getProducts = async ({
 
     return data;
   } catch (e: any) {
-    console.log(e);
     throw new Error(e);
   }
 };
@@ -53,33 +57,37 @@ const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
   });
 
   return (
-    <main className="w-screen overflow-hidden px-3">
+    <main className="w-screen overflow-hidden pb-10 px-3">
       <Header isIcon />
       <Sidebar />
-      <header className="w-screen border-t-[1px] border-t-stone-300 pt-6 mb-3 px-6 m-auto">
+      <header className="w-screen border-t-[1px] border-t-stone-300 pt-6 mb-3 px-6 m-auto sm:px-4">
         <div className="flex justify-start items-center gap-2">
-          <h2 className="text-3xl font-[300] text-stone-800 italic">
+          <h2 className="text-3xl sm:text-4xl xl:text-6xl font-[300] text-stone-800 italic">
             {searchParams.category}
           </h2>
-          /
-          <h2 className="text-2xl font-[400] text-stone-800 italic">
+          <p>-</p>
+          <h2 className="text-2xl sm:text-3xl xl:text-5xl font-[400] text-stone-800 italic">
             {searchParams.type}
           </h2>
         </div>
-        <Filter hint="choose type" keyAdded="type" options={typeOptions} />
+        <div className="w-full xl:w-[200px]">
+          <Filter hint="choose type" keyAdded="type" options={typeOptions} />
+        </div>
       </header>
       {products.length ? (
-        <nav className="w-screen grid grid-cols-2 justify-items-center">
+        <nav
+          className={`w-screen grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4  ${
+            products.length === 1
+              ? "justify-items-start"
+              : "justify-items-center"
+          }`}
+        >
           {products.map((product, idx) => (
             <Fragment key={idx}>
               <Card
-                width="w-[200px]"
-                title={product.title}
-                category={product.category}
-                previewSrc={product.previewSrc}
-                price={product.price}
-                id={product.id}
-                type={product.type}
+                {...product}
+                width="w-[120px] xs:w-[200px] lg:w-[230px] xl:w-[250px]"
+                height="h-[180px] sm:h-[220px] lg:h-[280px] xl:h-[280px]"
               />
             </Fragment>
           ))}

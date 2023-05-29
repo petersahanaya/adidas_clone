@@ -5,9 +5,8 @@ import Subtitle from "@/components/subtitle/Subtitle";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import MiniTablet from "./miniTablet/MiniTablet";
-import ClientOnly from "@/components/clientOnly/ClientOnly";
+import MiniLaptop from "./miniLaptop/miniLaptop";
 
 const listOfImage = [
   {
@@ -41,41 +40,38 @@ const listOfImage = [
 const Preview = () => {
   const [selectedIdx, setSelected] = useState(0);
 
-  const isMiniTablet = useMediaQuery({ minWidth: 450 });
-
   return (
-    <section className="w-screen h-[205px] xs:h-[305px] flex flex-col justify-center items-center">
-      {!isMiniTablet && (
-        <nav className="w-full overflow-y-hidden overflow-x-scroll flex justify-start items-center">
-          <div className="w-screen h-[200px]  relative">
-            <Image
-              className=" w-full h-full object-cover"
-              fill
-              src={listOfImage[selectedIdx].imageSrc}
-              alt={listOfImage[selectedIdx].title}
-              priority
-            />
-            <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-stone-800"></span>
-            <div className="absolute bottom-[20px] left-[20px]">
-              <Heading color="text-stone-100 left-[20px]">
-                {listOfImage[selectedIdx].title}
-              </Heading>
-              <Subtitle color="text-stone-300 left-[20px]">
-                {listOfImage[selectedIdx].subtitle}
-              </Subtitle>
-            </div>
+    <section className="w-screen h-[205px] xs:h-[305px] lg:h-[360px] flex flex-col justify-center items-center">
+      <nav className="w-full sm:hidden overflow-y-hidden overflow-x-scroll flex justify-start items-center">
+        <div className="w-screen h-[200px] xs:h-[300px] relative">
+          <Image
+            className=" w-full h-full object-cover"
+            fill
+            src={listOfImage[selectedIdx].imageSrc}
+            alt={listOfImage[selectedIdx].title}
+            priority
+          />
+          <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-stone-800"></span>
+          <div className="absolute bottom-[20px] left-[20px]">
+            <Heading color="text-stone-100 left-[20px]">
+              {listOfImage[selectedIdx].title}
+            </Heading>
+            <Subtitle color="text-stone-300 left-[20px]">
+              {listOfImage[selectedIdx].subtitle}
+            </Subtitle>
           </div>
-        </nav>
-      )}
+        </div>
+      </nav>
+      {/* )} */}
 
-      {isMiniTablet && (
-        <MiniTablet
-          listOfImage={listOfImage}
-          selectedIndex={selectedIdx}
-          setSelected={setSelected}
-        />
-      )}
-      <nav className="flex justify-center items-center gap-3 mt-2">
+      <MiniTablet
+        listOfImage={listOfImage}
+        selectedIndex={selectedIdx}
+        setSelected={setSelected}
+      />
+
+      <MiniLaptop />
+      <nav className="md:hidden flex justify-center items-center gap-3 mt-2">
         {Array(listOfImage.length)
           .fill(1)
           .map((_, idx) => (
