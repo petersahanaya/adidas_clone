@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       success_url: "https://p3das.vercel.app/?success=true",
       cancel_url: "https://p3das.vercel.app/?cancel=true",
     });
-    return NextResponse.json({ url: session.url as string });
+    return NextResponse.json({ session: session.id });
   } catch (err: any) {
     return NextResponse.json(err.message, { status: 500 });
   }

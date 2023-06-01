@@ -12,6 +12,7 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { getStripe } from "@/lib/config/stripe";
+import Stripe from "stripe";
 
 type CartClientProps = {
   session: Session;
@@ -70,11 +71,13 @@ const CartClient = ({ session }: CartClientProps) => {
           setState((prev) => ({ ...prev, error: "Something went wrong.." }));
         }
 
-        const data = (await resp.json()) as { id: string; url: string };
+        const { session } = (await resp.json()) as {
+          session: Stripe.Response<Stripe.Checkout.Session>;
+        };
 
-        window.location.replace(data.url);
+        console.log(session);
 
-        stripe?.redirectToCheckout({ sessionId: data.id });
+        stripe?.redirectToCheckout({ sessionId: session.id });
       } catch (e: any) {
         setState((prev) => ({
           ...prev,
