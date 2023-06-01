@@ -9,6 +9,7 @@ const Params = () => {
   const params = useSearchParams();
 
   const success = params.get("success");
+  const cancel = params.get("cancel");
 
   if (success) {
     return (
@@ -21,14 +22,16 @@ const Params = () => {
     );
   }
 
-  return (
-    <LottieComp
-      animation={cancelAnimation}
-      buttonText="continue"
-      title="Canceled product"
-      subtitle="product canceled when try to checkout.."
-    />
-  );
+  if (cancel) {
+    return (
+      <LottieComp
+        animation={cancelAnimation}
+        buttonText="continue"
+        title="Canceled product"
+        subtitle="product canceled when try to checkout.."
+      />
+    );
+  }
 };
 
 export default Params;
