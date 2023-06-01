@@ -70,7 +70,9 @@ const CartClient = ({ session }: CartClientProps) => {
           setState((prev) => ({ ...prev, error: "Something went wrong.." }));
         }
 
-        const data = (await resp.json()) as { id: string };
+        const data = (await resp.json()) as { id: string; url: string };
+
+        window.location.replace(data.url);
 
         stripe?.redirectToCheckout({ sessionId: data.id });
       } catch (e: any) {
@@ -202,14 +204,12 @@ const CartClient = ({ session }: CartClientProps) => {
               </article>
             </section>
 
-            <section
-              onClick={() => onPressedCheckout()}
-              className="px-3 lg:mt-4 flex-1 w-full"
-            >
+            <section className="px-3 lg:mt-4 flex-1 w-full">
               <Button
                 padding="p-2 px-6"
                 textColor="text-white text-md"
                 type="button"
+                onClick={() => onPressedCheckout()}
               >
                 {state.loading ? "Redirecting.." : "Check out"}
                 <LongArrow width={26} height={26} />
