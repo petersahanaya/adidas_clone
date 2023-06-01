@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Head from "next/head";
 import { BASE_URL } from "@/lib/config/url";
+import { redirect } from "next/navigation";
 
 export const fetchCache = "force-no-store";
 export const dynamic = "force-dynamic";
@@ -41,6 +42,11 @@ type ProductIdProps = {
 
 const ProductWithId = async ({ params }: ProductIdProps) => {
   const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    return redirect("/signIn");
+  }
+
   const product = await getProduct(params.id, session?.user.id!);
 
   return (

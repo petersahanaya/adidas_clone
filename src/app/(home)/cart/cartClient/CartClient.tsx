@@ -10,7 +10,8 @@ import { useCart } from "@/hooks/cart/cart_hooks";
 import { ConvertNumber } from "@/lib/functions/covertNumber";
 import { Session } from "next-auth";
 import Image from "next/image";
-import { BASE_URL } from "@/lib/config/url";
+import { useCallback, useState } from "react";
+import { getStripe } from "@/lib/config/stripe";
 
 type CartClientProps = {
   session: Session;
@@ -18,6 +19,11 @@ type CartClientProps = {
 
 const CartClient = ({ session }: CartClientProps) => {
   const cart = useCart((state) => state.products);
+  const [state, setState] = useState({
+    loading: false,
+    success: false,
+    error: "",
+  });
 
   const increaseOnPressed = useCart((state) => state.incrementProductCount);
 
@@ -41,6 +47,48 @@ const CartClient = ({ session }: CartClientProps) => {
       const data = await resp.json();
     } catch (e: any) {}
   };
+
+  const onPressedCheckout: any = useCallback(async () => {
+    if (!cart.length) {
+      setState((prev) => ({ ...prev, error: "products are required.." }));
+    }
+
+    if (cart.length) {
+      try {
+        const stripe = await getStripe();
+
+        setState((prev) => ({ ...prev, loading: true }));
+        const resp = await fetch("https://p3das.vercel.app/api/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ products: cart }),
+        });
+
+        if (resp.status === 500) {
+          setState((prev) => ({ ...prev, error: "Something went wrong.." }));
+        }
+
+        const data = (await resp.json()) as { id: string };
+
+        stripe?.redirectToCheckout({ sessionId: data.id });
+      } catch (e: any) {
+        setState((prev) => ({
+          ...prev,
+          error: "Something went wrong..",
+        }));
+      } finally {
+        setState((prev) => ({
+          ...prev,
+          loading: false,
+          success: false,
+          error: "",
+        }));
+      }
+    }
+  }, [cart]);
+
   return (
     <main className="w-full pb-8">
       <Header isIcon />
@@ -154,13 +202,16 @@ const CartClient = ({ session }: CartClientProps) => {
               </article>
             </section>
 
-            <section className="px-3 lg:mt-4 flex-1 w-full">
+            <section
+              onClick={onPressedCheckout()}
+              className="px-3 lg:mt-4 flex-1 w-full"
+            >
               <Button
                 padding="p-2 px-6"
                 textColor="text-white text-md"
                 type="button"
               >
-                Check out
+                {state.loading ? "Redirecting.." : "Check out"}
                 <LongArrow width={26} height={26} />
               </Button>
             </section>
