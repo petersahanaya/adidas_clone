@@ -32,6 +32,8 @@ const Params = () => {
       />
     );
   }
+
+  return <></>;
 };
 
 export default Params;
