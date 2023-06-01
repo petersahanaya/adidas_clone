@@ -48,7 +48,7 @@ const CartClient = ({ session }: CartClientProps) => {
     } catch (e: any) {}
   };
 
-  const onPressedCheckout: any = useCallback(async () => {
+  const onPressedCheckout = useCallback(async () => {
     if (!cart.length) {
       setState((prev) => ({ ...prev, error: "products are required.." }));
     }
@@ -203,7 +203,7 @@ const CartClient = ({ session }: CartClientProps) => {
             </section>
 
             <section
-              onClick={onPressedCheckout()}
+              onClick={() => onPressedCheckout()}
               className="px-3 lg:mt-4 flex-1 w-full"
             >
               <Button
