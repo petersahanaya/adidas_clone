@@ -13,6 +13,8 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 import { getStripe } from "@/lib/config/stripe";
 import Stripe from "stripe";
+import { motion } from "framer-motion";
+import { ParentVariants } from "@/lib/config/configMotion";
 
 type CartClientProps = {
   session: Session;
@@ -20,11 +22,14 @@ type CartClientProps = {
 
 const CartClient = ({ session }: CartClientProps) => {
   const cart = useCart((state) => state.products);
+
   const [state, setState] = useState({
     loading: false,
     success: false,
     error: "",
   });
+
+  //https://p3das.vercel.app
 
   const increaseOnPressed = useCart((state) => state.incrementProductCount);
 
@@ -49,50 +54,51 @@ const CartClient = ({ session }: CartClientProps) => {
     } catch (e: any) {}
   };
 
-  const onPressedCheckout = useCallback(async () => {
-    if (!cart.length) {
-      setState((prev) => ({ ...prev, error: "products are required.." }));
-    }
-
-    if (cart.length) {
-      try {
-        const stripe = await getStripe();
-
-        setState((prev) => ({ ...prev, loading: true }));
-        const resp = await fetch("https://p3das.vercel.app/api/checkout", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ products: cart }),
-        });
-
-        if (resp.status === 500) {
-          setState((prev) => ({ ...prev, error: "Something went wrong.." }));
-        }
-
-        const { session } = (await resp.json()) as {
-          session: Stripe.Response<Stripe.Checkout.Session>;
-        };
-
-        console.log(session);
-
-        stripe?.redirectToCheckout({ sessionId: session.id });
-      } catch (e: any) {
-        setState((prev) => ({
-          ...prev,
-          error: "Something went wrong..",
-        }));
-      } finally {
-        setState((prev) => ({
-          ...prev,
-          loading: false,
-          success: false,
-          error: "",
-        }));
+  const onPressedCheckout = useCallback(
+    async (userId: string) => {
+      if (!cart.length) {
+        setState((prev) => ({ ...prev, error: "products are required.." }));
       }
-    }
-  }, [cart]);
+
+      if (cart.length) {
+        try {
+          const stripe = await getStripe();
+
+          setState((prev) => ({ ...prev, loading: true }));
+          const resp = await fetch("https://p3das.vercel.app/api/checkout", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ products: cart, userId }),
+          });
+
+          if (resp.status === 500) {
+            setState((prev) => ({ ...prev, error: "Something went wrong.." }));
+          }
+
+          const { session } = (await resp.json()) as {
+            session: Stripe.Response<Stripe.Checkout.Session>;
+          };
+
+          stripe?.redirectToCheckout({ sessionId: session.id });
+        } catch (e: any) {
+          setState((prev) => ({
+            ...prev,
+            error: "Something went wrong..",
+          }));
+        } finally {
+          setState((prev) => ({
+            ...prev,
+            loading: false,
+            success: false,
+            error: "",
+          }));
+        }
+      }
+    },
+    [cart]
+  );
 
   return (
     <main className="w-full pb-8">
@@ -115,7 +121,10 @@ const CartClient = ({ session }: CartClientProps) => {
             {cart
               .sort((a, b) => a.price - b.price)
               .map((product, idx) => (
-                <section
+                <motion.section
+                  initial="hidden"
+                  animate="visible"
+                  variants={ParentVariants(0.5, 0.5)}
                   className="w-full h-[200px] xs:h-[230px] overflow-hidden p-1 flex justify-between sm:justify-start items-start gap-3 border-b-[1px] border-b-stone-300 pb-5"
                   key={idx}
                 >
@@ -181,7 +190,7 @@ const CartClient = ({ session }: CartClientProps) => {
                       </section>
                     </article>
                   </aside>
-                </section>
+                </motion.section>
               ))}
           </nav>
 
@@ -212,7 +221,7 @@ const CartClient = ({ session }: CartClientProps) => {
                 padding="p-2 px-6"
                 textColor="text-white text-md"
                 type="button"
-                onClick={() => onPressedCheckout()}
+                onClick={() => onPressedCheckout(session.user!.id!)}
               >
                 {state.loading ? "Redirecting.." : "Check out"}
                 <LongArrow width={26} height={26} />

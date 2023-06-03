@@ -60,7 +60,7 @@ const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
   });
 
   return (
-    <main className="w-screen overflow-hidden pb-10 px-3">
+    <main className="w-screen overflow-hidden pb-10 ">
       <Header isIcon />
       <Sidebar />
       <header className="w-screen border-t-[1px] border-t-stone-300 pt-6 mb-3 px-6 m-auto sm:px-4">
@@ -79,7 +79,7 @@ const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
       </header>
       {products.length ? (
         <nav
-          className={`w-screen grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4  ${
+          className={`w-screen  grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4  ${
             products.length === 1
               ? "justify-items-start"
               : "justify-items-center"

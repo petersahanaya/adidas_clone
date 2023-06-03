@@ -4,9 +4,10 @@ import Preview from "../homepage/preview/Preview";
 import Hot from "./hot/Hot";
 import Category from "./category/Category";
 import Params from "./searchParams/Params";
+import Footer from "@/components/footer/Footer";
 
 export const metadata = {
-  title: "Adidas",
+  title: "P3das",
 };
 
 export const fetchCache = "force-no-store";
@@ -14,7 +15,7 @@ export const dynamic = "force-dynamic";
 
 const HomePage = () => {
   return (
-    <main className="w-screen pb-10 overflow-hidden">
+    <main className="w-screen overflow-hidden">
       <Header />
       <Params />
       <Preview />
@@ -22,6 +23,7 @@ const HomePage = () => {
       <Hot />
       <Category />
       <Sidebar />
+      <Footer />
     </main>
   );
 };

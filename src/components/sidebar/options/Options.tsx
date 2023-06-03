@@ -17,6 +17,36 @@ type FilterProps = {
   value2: string;
 };
 
+const parentVariant = {
+  hidden: {
+    height: 0,
+    opacity: 0.6,
+    transition: {
+      bounce: 0.2,
+      duration: 0.3,
+      ease: "easeOut",
+      when: "beforeChildren",
+      staggerChildren: 0.3,
+      delayChildren: 0.3,
+    },
+  },
+  visible: {
+    height: "auto",
+    opacity: 1,
+  },
+  exit: { height: 0, opacity: 0 },
+};
+
+const childVariant = {
+  hidden: { y: -30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { bounce: 0.2, duration: 0.3, ease: "easeOut" },
+  },
+  exit: { height: 0, opacity: 0 },
+};
+
 const Options = ({
   hint,
   options,
@@ -151,13 +181,14 @@ const Options = ({
           {open && (
             <motion.nav
               className="w-full overflow-hidden"
-              initial={{ height: 0, opacity: 0.6 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: "0", opacity: 0.6 }}
-              transition={{ bounce: 0.2, duration: 0.3, ease: "easeOut" }}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={parentVariant}
             >
               {options.map((option, idx) => (
-                <section
+                <motion.section
+                  variants={childVariant}
                   onClick={() => onPressedChooseValue(idx)}
                   className={`w-full px-4 bg-stone-200 p-2 rounded-sm text-sm  ${
                     active === idx
@@ -167,7 +198,7 @@ const Options = ({
                   key={idx}
                 >
                   <p>{option.value}</p>
-                </section>
+                </motion.section>
               ))}
             </motion.nav>
           )}

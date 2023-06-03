@@ -1,4 +1,8 @@
+"use client";
+
+import { ParentVariants } from "@/lib/config/configMotion";
 import { ConvertNumber } from "@/lib/functions/covertNumber";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 

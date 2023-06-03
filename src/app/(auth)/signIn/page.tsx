@@ -30,6 +30,8 @@ const SignInPage = () => {
           </section>
           <nav className="hidden lg:inline-block">
             <LottieComp
+              width="w-full"
+              height="h-full"
               isDescription={false}
               subtitle=""
               title=""

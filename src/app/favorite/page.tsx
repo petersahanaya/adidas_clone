@@ -39,7 +39,7 @@ const getFavoriteProducts = async ({
   try {
     if (category && type) {
       const resp = await fetch(
-        `https://p3das.vercel.app/api/like?userId=${userId}&category=${category}&type=${type}`,
+        `http://localhost:3000/api/like?userId=${userId}&category=${category}&type=${type}`,
         {
           cache: "no-store",
         }
@@ -49,7 +49,7 @@ const getFavoriteProducts = async ({
       return data;
     } else if (category) {
       const resp = await fetch(
-        `https://p3das.vercel.app/api/like?userId=${userId}&category=${category}`,
+        `http://localhost:3000/api/like?userId=${userId}&category=${category}`,
         {
           cache: "no-store",
         }
@@ -59,7 +59,7 @@ const getFavoriteProducts = async ({
       return data;
     } else if (type) {
       const resp = await fetch(
-        `https://p3das.vercel.app/api/like?userId=${userId}&type=${type}`,
+        `http://localhost:3000/api/like?userId=${userId}&type=${type}`,
         {
           cache: "no-store",
         }
@@ -70,7 +70,7 @@ const getFavoriteProducts = async ({
     }
 
     const resp = await fetch(
-      `https://p3das.vercel.app/api/like?userId=${userId}`,
+      `http://localhost:3000/api/like?userId=${userId}`,
       {
         cache: "no-store",
       }

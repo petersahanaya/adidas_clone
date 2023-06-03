@@ -13,23 +13,27 @@ const Params = () => {
 
   if (success) {
     return (
-      <LottieComp
-        animation={successAnimation}
-        buttonText="continue"
-        title="Successfully buy product's"
-        subtitle="thank you for join our website"
-      />
+      <main className="fixed top-0 left-0 z-50 w-screen h-screen bg-white">
+        <LottieComp
+          animation={successAnimation}
+          buttonText="continue"
+          title="Successfully buy product's"
+          subtitle="thank you for join our website"
+        />
+      </main>
     );
   }
 
   if (cancel) {
     return (
-      <LottieComp
-        animation={cancelAnimation}
-        buttonText="continue"
-        title="Canceled product"
-        subtitle="product canceled when try to checkout.."
-      />
+      <main className="fixed top-0 left-0 z-50 w-screen h-screen bg-white">
+        <LottieComp
+          animation={cancelAnimation}
+          buttonText="continue"
+          title="Canceled product"
+          subtitle="product canceled when try to checkout.."
+        />
+      </main>
     );
   }
 

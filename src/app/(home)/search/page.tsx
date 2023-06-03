@@ -71,12 +71,9 @@ const getQueryProducts = async (
     } catch (e: any) {}
   } else {
     try {
-      const resp = await fetch(
-        `https://p3das.vercel.app/api/search?q=${title}`,
-        {
-          cache: "no-store",
-        }
-      );
+      const resp = await fetch(`https://p3das.vercel.app/api/search?q=${title}`, {
+        cache: "no-store",
+      });
 
       const data = (await resp.json()) as { products: Product[] | [] };
 

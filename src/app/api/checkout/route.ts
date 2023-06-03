@@ -1,9 +1,13 @@
+import { prisma } from "@/lib/config/prisma.config";
 import { stripe } from "@/lib/config/stripe";
 import { Product } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { products } = (await req.json()) as { products: Product[] };
+  const { products, userId } = (await req.json()) as {
+    products: Product[];
+    userId: string;
+  };
 
   try {
     // Create Checkout Sessions from body params.
@@ -36,7 +40,15 @@ export async function POST(req: Request) {
       success_url: "https://p3das.vercel.app/?success=true",
       cancel_url: "https://p3das.vercel.app/?cancel=true",
     });
-    return NextResponse.json({ session: session.id });
+
+    for (const product of products) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { bag: { disconnect: { id: product.id } } },
+      });
+    }
+
+    return NextResponse.json({ session });
   } catch (err: any) {
     return NextResponse.json(err.message, { status: 500 });
   }

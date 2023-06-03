@@ -3,10 +3,21 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import ReactQueryProvider from "@components/clientOnly/reactQueryProvider/ReactQueryProvider";
 import GenerateCart from "@components/generateCart/GenerateCart";
-import Footer from "@/components/footer/Footer";
 
 export const fetchCache = "force-no-store";
 export const dynamic = "force-dynamic";
+
+export const metadata = {
+  title: "P3das",
+  icons: "/adidas-icon.png",
+  description: "Best place to get best shirt.",
+  keywords: "Shirt, Shoes, Portfolio",
+  authors: {
+    name: "Peter Sahanaya",
+    url: "https://linkedin.com/in/peter-sahanaya",
+  },
+  creator: "peter",
+};
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,7 +39,6 @@ export default function RootLayout({
             {children}
           </SessionProvide>
         </ReactQueryProvider>
-        {/* <Footer /> */}
       </body>
     </html>
   );
