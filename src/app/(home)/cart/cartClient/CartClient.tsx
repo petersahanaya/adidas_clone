@@ -81,6 +81,8 @@ const CartClient = ({ session }: CartClientProps) => {
             session: Stripe.Response<Stripe.Checkout.Session>;
           };
 
+          window.location.replace(session.url as string);
+
           stripe?.redirectToCheckout({ sessionId: session.id });
         } catch (e: any) {
           setState((prev) => ({
