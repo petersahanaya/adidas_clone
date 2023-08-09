@@ -1,25 +1,23 @@
-## Adidas Clone
-A fully functional clone of the Adidas website, built using OAuth, Next.js 13, PostgreSQL database, and Prisma ORM for data modeling and persistence.
+![Cover Image](https://github.com/petersahanaya/adidas_clone/assets/114085979/a836e268-44ad-490a-b9b7-8a05f835f145)
 
-## Table of Contents
-- Features
-- Technologies
+### 👕 P3DAS Store 
+P3das is a eCommerce web application, built with Next Js and other modern technology. I got this inspiration from Adidas Website.
 
-## Features
-- User authentication using OAuth for secure login and registration.
-- Browse and search for Adidas products.
-- Add products to the shopping cart and proceed to checkout.
-- User profile management.
-- Wishlist functionality to save favorite products.
-- Integration with payment gateways for seamless transactions.
+### 💡 Features
+* User Authentication with Oauth 
+* Browse and search products
+* Add product to cart and checkout procced
+* Wishlist functionality to save favorite products.
+* Integration with payment.
 
-## Technologies
-- Next.js 13: A popular React framework for building server-rendered applications.
-- OAuth: A secure authentication protocol used for user login and registration.
-- PostgreSQL: A powerful and open-source relational database management system.
-- Prisma: An ORM (Object-Relational Mapping) tool for TypeScript and Node.js that simplifies database access.
+### 🎥 Video Preview 
+https://github.com/petersahanaya/adidas_clone/assets/114085979/44ba432b-d0d3-44e8-bb82-1ca67190fc33
 
-Feel free to copy and customize this template for your Adidas clone project!
+### 🕹️ Technology 
+Next Js · React Js · Node Js · Tailwind Css · Zustand · Stripe · Git
+
+
+
 
 
 
